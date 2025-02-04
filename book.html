@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OneMoreChapter - Homepage</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f0;
+        color: #4a4a3d;
+      }
+
+      header {
+        background-color: #9cab85;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        position: relative;
+      }
+
+      header .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1rem;
+      }
+
+      .icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .icons .icon {
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #ffffff;
+        position: relative;
+      }
+
+      .search-popup {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 100px;
+        background-color: #ffffff;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-popup input {
+        padding: 5px;
+        font-size: 1rem;
+        width: 200px;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 60px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .dropdown a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #4a4a3d;
+      }
+
+      .dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+
+      .language {
+        cursor: pointer;
+        font-size: 1rem;
+        color: #ffffff;
+      }
+
+      .container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .shelves-and-search {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 30px;
+      }
+
+      .shelves {
+        flex: 1;
+      }
+
+      .shelves img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+      }
+
+      .search-bar {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+      }
+
+      .search-bar button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #9cab85;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .recommended {
+        width: 100%;
+        max-width: 1200px;
+        background-color: #c3c6a8;
+        padding: 40px;
+        border-radius: 10px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .recommended h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      .recommended-reads {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .book-placeholder {
+        width: 100%;
+        padding-bottom: 150%; /* Aspect ratio for a responsive square */
+        background-color: #e0e0d1;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .book-placeholder span {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 0.9rem;
+        color: #4a4a3d;
+      }
+
+      footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #7a7a7a;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">OneMoreChapter</div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Books on Loan</a></li>
+          <li><a href="#">My Inventory</a></li>
+          <li><a href="#">Currently Reading</a></li>
+          <li><a href="#">Requests</a></li>
+        </ul>
+      </nav>
+      <div class="icons">
+        <div class="icon search-icon" onclick="toggleSearchPopup()">🔍</div>
+        <div
+          class="icon messages-icon"
+          onclick="window.location.href='messages.html'"
+        >
+          💬
+        </div>
+        <div class="icon profile-icon" onclick="toggleDropdown()">👤</div>
+        <div class="dropdown">
+          <a href="#">My Profile</a>
+          <a href="#">Account Settings</a>
+        </div>
+        <div class="language" onclick="toggleLanguage()">EN/DE</div>
+      </div>
+      <div class="search-popup">
+        <input type="text" placeholder="Search..." />
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Shelves and Search Bar Section -->
+      <div class="shelves-and-search">
+        <div class="shelves">
+          <img src="bookshelf.png" alt="Bookshelf" />
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search for books..." />
+          <button>Search</button>
+        </div>
+      </div>
+
+      <!-- Recommended Reads Section -->
+      <div class="recommended">
+        <h2>Recommended Reads:</h2>
+        <div class="recommended-reads">
+          <div class="book-placeholder"><span>Book Title 1</span></div>
+          <div class="book-placeholder"><span>Book Title 2</span></div>
+          <div class="book-placeholder"><span>Book Title 3</span></div>
+          <div class="book-placeholder"><span>Book Title 4</span></div>
+          <div class="book-placeholder"><span>Book Title 5</span></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Terms and Conditions | Privacy | Help</p>
+    </footer>
+
+    <script>
+      function toggleSearchPopup() {
+        const popup = document.querySelector(".search-popup");
+        popup.style.display =
+          popup.style.display === "block" ? "none" : "block";
+      }
+
+      function toggleDropdown() {
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+      }
+
+      function toggleLanguage() {
+        alert("Language toggled!");
+      }
+    </script>
+  </body>
+</html>
