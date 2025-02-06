@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .container { width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        input { width: 100%; padding: 10px; margin: 5px 0; }
+        button { width: 100%; padding: 10px; background-color: blue; color: white; border: none; cursor: pointer; }
+        .message { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Login</h2>
+
+    <input type="email" id="loginEmail" placeholder="Enter your email">
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+    <input type="checkbox" id="toggleLoginPassword"> Show Password
+    <button onclick="login()">Login</button>
+
+    <p class="message" id="message"></p>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+</div>
+
+<script>
+    function login() {
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+
+        if (!email || !password) {
+            document.getElementById("message").textContent = "All fields are required!";
+            return;
+        }
+
+        fetch("http://localhost:8080/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        })
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById("message").textContent = data;
+            if (data === "Login Successful") {
+                sessionStorage.setItem("loggedInUser", email); // Store session
+                alert("Login successful! Redirecting...");
+                window.location.href = "home.html"; // Redirect to home page
+            }
+        })
+            .catch(error => console.error("Error:", error));
+    }
+    //  Toggle Password Visibility for Login Page
+    document.getElementById("toggleLoginPassword").addEventListener("click", function() {
+        let loginPasswordField = document.getElementById("loginPassword");
+        loginPasswordField.type = this.checked ? "text" : "password";
+    });
+</script>
+
+</body>
+</html>

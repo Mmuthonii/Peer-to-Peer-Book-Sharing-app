@@ -1,0 +1,34 @@
+[
+  {
+    "username": "CynthiaM",
+    "email": "cymuthonik@gmail.com",
+    "dob": "2002-02-22",
+    "gender": "Female",
+    "city": "Frankfurt",
+    "password": "$2a$10$9jucHISMmf1mZz4AzWLvveYiQ8OHSqSJq2cO7y5LQddApb2gFl8bq"
+  },
+  {
+    "username": "CynthiaM",
+    "email": "cynthiamuthonik@gmail.com",
+    "dob": "2002-02-22",
+    "gender": "Female",
+    "city": "Bremen",
+    "password": "$2a$10$ZJISenGy4BnlmJm7Jj0S1ubWp7ejwlZ4CruKrAWwlPsTam5Ju/sBa"
+  },
+  {
+    "username": "mmuthoniii",
+    "email": "marysarahkk@gmail.com",
+    "dob": "2009-02-22",
+    "gender": "Female",
+    "city": "Munich",
+    "password": "$2a$10$Yj6FbyT7T2A76xscqMFHpOmOQvkhOFfRozNem.vsBqGGfX6qncTDu"
+  },
+  {
+    "username": "Alison M",
+    "email": "alison.w.mugavana@gmail.com",
+    "dob": "2020-03-11",
+    "gender": "Female",
+    "city": "Berlin",
+    "password": "$2a$10$Kr9FZ8O/7ZzLyS9LV4jnEOtgzGqDKSucSLIoSMiwQZvRk8GI26dYW"
+  }
+]

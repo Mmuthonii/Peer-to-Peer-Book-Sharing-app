@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OneMoreChapter - Homepage</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f0;
+            color: #4a4a3d;
+        }
+
+        header {
+            background-color: #9cab85;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icons .icon {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
+        .container {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Shelves and Search Bar Section */
+        .shelves-and-search {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 50px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .shelves img {
+            width: 280px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            padding: 12px 25px;
+            border: none;
+            background-color: #9cab85;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Recommended Reads Section */
+        .recommended {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #c3c6a8;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .recommended h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #4a4a3d;
+        }
+
+        .recommended-reads {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Adjusted for 5 books per row */
+            gap: 30px;
+        }
+
+        .book-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            background-color: #e0e0d1;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        .book-placeholder img {
+            width: 120px; /* Slightly smaller book cover */
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .book-details {
+            text-align: center;
+        }
+
+        .book-details h4 {
+            font-size: 1rem;
+            margin: 5px 0;
+            color: #4a4a3d;
+        }
+
+        .book-details p {
+            font-size: 0.9rem;
+            color: #6b6b5e;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7a7a7a;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">OneMoreChapter</div>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Books on Loan</a></li>
+            <li><a href="#">My Inventory</a></li>
+            <li><a href="#">Currently Reading</a></li>
+            <li><a href="#">Requests</a></li>
+        </ul>
+    </nav>
+    <div class="icons">
+        <div class="icon" onclick="toggleSearchPopup()">🔍</div>
+        <div class="icon" onclick="window.location.href='messages.html'">💬</div>
+        <div class="icon" onclick="logout()">👤</div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Shelves and Search Bar Section -->
+    <div class="shelves-and-search">
+        <div class="shelves">
+            <img src="bookshelf.png" alt="Bookshelf" />
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for books..." />
+            <button>Search</button>
+        </div>
+    </div>
+
+    <!-- Recommended Reads Section -->
+    <div class="recommended">
+        <h2>Recommended Reads:</h2>
+        <div class="recommended-reads" id="recommendedReads">
+            <!-- Books will be dynamically added here -->
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>Terms and Conditions | Privacy | Help</p>
+</footer>
+
+<script>
+    // Fetch Recommended Books from Google Books API
+    async function fetchRecommendedBooks() {
+        const genres = JSON.parse(sessionStorage.getItem("selectedGenres")) || ["Fiction", "Mystery", "Fantasy", "Romance", "Horror"];
+        const recommendedReads = document.getElementById("recommendedReads");
+
+        recommendedReads.innerHTML = ""; // Clear any previous content
+
+        for (const genre of genres) {
+            try {
+                const response = await fetch(
+                    `https://www.googleapis.com/books/v1/volumes?q=subject:${encodeURIComponent(genre)}&maxResults=1`
+                );
+                const data = await response.json();
+
+                if (data.items) {
+                    data.items.forEach((book) => {
+                        const bookDiv = document.createElement("div");
+                        bookDiv.classList.add("book-placeholder");
+
+                        bookDiv.innerHTML = `
+            <img src="${book.volumeInfo.imageLinks?.thumbnail || 'https://via.placeholder.com/100x150'}" alt="${book.volumeInfo.title}" />
+            <div class="book-details">
+              <h4>${book.volumeInfo.title || "Unknown Title"}</h4>
+              <p>${book.volumeInfo.authors?.join(", ") || "Unknown Author"}</p>
+            </div>
+          `;
+                        recommendedReads.appendChild(bookDiv);
+                    });
+                }
+            } catch (error) {
+                console.error(`Error fetching books for genre: ${genre}`, error);
+            }
+        }
+    }
+    // Load Recommended Books on Page Load
+    fetchRecommendedBooks();
+
+    function logout() {
+        sessionStorage.clear();
+        alert("You have been logged out.");
+        window.location.href = "signup.html";
+    }
+</script>
+</body>
+</html>
