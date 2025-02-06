@@ -1,0 +1,18 @@
+# Ignore IDE files
+.idea/
+*.iml
+
+# Ignore build files
+target/
+*.class
+*.jar
+
+# Ignore Maven-specific files
+/pom.properties
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore logs and temporary files
+*.log
+*.tmp
