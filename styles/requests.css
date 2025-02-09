@@ -1,20 +1,53 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+html {
+    overflow-y: scroll; /* Ensures scrollbar is always present */
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f0;
     color: #4a4a3d;
 }
 
-/* Header */
+/* Fix Header Alignment */
 header {
     background-color: #9cab85;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    height: 60px; /* Set a fixed height */
+    padding: 0 2rem; /* Increase padding */
+
+    position: relative;
 }
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1rem;
+    margin-right: 0.7rem;
+}
+
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a4a3d;
+}
+
+/* Move "Requests" title to the left */
+.page-title h2 {
+    text-align: left;
+    margin: 5rem 0 5rem 13rem; /* Moves title left to align with books */
+    width: 100%;
+    font-size: 3rem; /* Adjust the size */
+}
+
 
 header h1 {
     font-size: 1.5rem;
@@ -22,67 +55,47 @@ header h1 {
     color: #4a4a3d;
 }
 
-nav {
-    display: flex;
-    gap: 1.5rem;
-}
 
-nav a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-}
 
 nav a.active {
     font-weight: bold;
     text-decoration: underline;
 }
 
-/* Icons */
-.icon-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+/* Section Titles */
+h2 {
+    font-size: 2rem;
+    margin: 2rem 0 1rem 13rem;
 }
 
-.icon {
-    width: 24px;
-    height: 24px;
-    fill: white;
-    cursor: pointer;
+section {
+    margin-bottom: 5rem; /* Increases space between sections */
 }
 
-/* Requests Layout */
-.requests-section {
-    width: 80%;
-    margin: 2rem auto;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #ccc;
-}
-
-.requests-section:last-of-type {
-    border-bottom: none;
-}
-
+/* Space out table titles */
 h3 {
+    font-size: 1.5rem;
     font-style: italic;
-    color: #4a4a3d;
+    margin-left: 13rem;
+    margin-bottom: 1.5rem; /* Adds space below the title */
 }
 
-/* Table Styling */
+/* Increase space between tables */
 table {
-    width: 100%;
+    width: 80%;
+    margin: 3rem auto 3rem 13rem; /* Increased bottom margin */
     border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-tr {
-    border-bottom: 1px solid #ddd;
+    text-align: left;
 }
 
 th, td {
     padding: 1rem;
-    vertical-align: middle;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    font-size: 1.2rem;
+    font-style: italic;
 }
 
 /* Book and User Placeholders */
@@ -92,6 +105,14 @@ th, td {
     background-color: #ececec;
     border-radius: 8px;
     display: inline-block;
+    vertical-align: middle;
+}
+
+.book-title {
+    display: inline-block;
+    margin-left: 15px; /* Adds space next to the book */
+    font-size: 1rem;
+    color: #4a4a3d;
 }
 
 .user-placeholder {
@@ -104,39 +125,49 @@ th, td {
     margin-right: 10px;
 }
 
-/* Status */
-.status-column {
-    text-align: left;
-}
-
+/* Status Styling */
 .status {
-    background-color: #f8e5d1;
+    display: inline-block;
     padding: 5px 10px;
-    border-radius: 10px;
+    background-color: #f8d7a8;
+    color: #4a4a3d;
+    font-size: 0.9rem;
     font-style: italic;
+    border-radius: 5px;
 }
 
-/* Accept/Reject Buttons */
-.action-column {
-    text-align: center;
-}
-
-.accept, .reject {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
+.pickup, .dropoff {
     display: block;
-    margin: 5px auto;
+    font-size: 0.9rem;
+    color: #4a4a3d;
+    font-weight: bold;
 }
 
-.accept {
+/* Action Buttons */
+.accept-btn {
     background-color: #9cab85;
     color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
-.reject {
+.reject-btn {
     background-color: #c96c6c;
     color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.accept-btn:hover {
+    background-color: #7a9a6e;
+}
+
+.reject-btn:hover {
+    background-color: #b25050;
 }
