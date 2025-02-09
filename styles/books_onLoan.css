@@ -1,9 +1,16 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+html {
+    overflow-y: scroll; /* Ensures scrollbar is always present */
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f0;
     color: #4a4a3d;
 }
 
@@ -14,20 +21,27 @@ header {
     align-items: center;
     height: 60px; /* Set a fixed height */
     padding: 0 2rem; /* Increase padding */
+
     position: relative;
 }
 
-h1 {
-    margin: 0;
-    color: #fff;
+header .logo {
     font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a4a3d;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
 }
 
 nav a {
     text-decoration: none;
     color: #ffffff;
     font-size: 1rem;
-    margin-right: 1rem;
+    margin-right: 0.7rem;
 }
 
 nav a.active {
@@ -37,10 +51,10 @@ nav a.active {
 
 .icon-bar {
     display: flex;
-    align-items: center;
     gap: 1rem;
+    align-items: center;
     
-    
+ 
 }
 
 .icon {
@@ -61,15 +75,15 @@ nav a.active {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .search-popup input {
+.search-popup input {
     padding: 5px;
     font-size: 1rem;
     width: 200px;
-  }
+}
 
-  .dropdown {
+.dropdown {
     display: none;
     position: absolute;
     top: 50px;
@@ -78,23 +92,25 @@ nav a.active {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .dropdown a {
+.dropdown a {
     display: block;
     padding: 10px;
     text-decoration: none;
     color: #4a4a3d;
-  }
+}
 
-  .dropdown a:hover {
+.dropdown a:hover {
     background-color: #f0f0f0;
-  }
+}
 
 
 .page-title {
-    text-align: center;
-    margin: 3rem 0;
+    text-align: left;
+    margin: 5rem 0 5rem 13rem; /* Moves title left to align with books */
+    width: 100%;
+    font-size: 2rem; /* Adjust the size */
 }
 
 /* Book Grid Styles */
@@ -142,6 +158,34 @@ nav a.active {
 .browse-more:hover {
     background-color: #7a9a6e; /* Darker shade on hover */
 }
+
+.pagination {
+    display: flex;
+    justify-content: center; /* Center pagination */
+    margin: 2rem 0; /* Space above and below */
+    gap: 10px; /* Space between numbers */
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #4a4a3d;
+    background-color: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #9cab85; /* Change color on hover */
+    color: white;
+}
+
+.pagination .active {
+    background-color: #6c9e6b;
+    color: white;
+    font-weight: bold;
+}
+
 
 /* Footer */
 footer {
