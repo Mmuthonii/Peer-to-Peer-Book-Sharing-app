@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messages</title>
+    <link rel="stylesheet" href="styles/messages.css" />
+  </head>
+  <body>
+    <header>
+      <h1>OneMoreChapter</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="books-on-loan.html">Books on Loan</a>
+        <a href="inventory.html">My Inventory</a>
+        <a href="currently-reading.html">Currently Reading</a>
+        <a href="requests.html">Requests</a>
+      </nav>
+      <div class="icon-bar">
+        <!-- Search Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 2a8 8 0 015.293 13.707l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+          ></path>
+        </svg>
+        <!-- Messaging Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+          ></path>
+        </svg>
+        <!-- Profile Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+          ></path>
+        </svg>
+      </div>
+    </header>
+
+    <main>
+      <h2>Messages</h2>
+      <div class="messages-container">
+        <div class="user-list">
+          <div class="user">
+            <div class="user-avatar"></div>
+            <span class="notification">1</span>
+            <p>User Name</p>
+            <div class="chat-preview"></div>
+          </div>
+          <div class="user">
+            <div class="user-avatar"></div>
+            <span class="notification">1</span>
+            <p>User Name</p>
+            <div class="chat-preview"></div>
+          </div>
+        </div>
+        <div class="chat-box">
+          <div class="chat-header">
+            <div class="user-avatar"></div>
+            <p>Username</p>
+          </div>
+          <div class="chat-messages">
+            <div class="message">Message content</div>
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Message..." />
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

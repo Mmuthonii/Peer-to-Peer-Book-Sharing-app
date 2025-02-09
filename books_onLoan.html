@@ -6,15 +6,18 @@
     <title>Books on Loan</title>
     <link rel="stylesheet" href="styles/books_onLoan.css" />
   </head>
+
   <body>
     <header>
-      <h1>OneMoreChapter</h1>
+      <div class="logo">OneMoreChapter</div>
       <nav>
-        <a href="homepage.html">Home</a>
-        <a href="books-on-loan.html" class="active">Books on Loan</a>
-        <a href="#">My Inventory</a>
-        <a href="#">Currently Reading</a>
-        <a href="#">Requests</a>
+        <ul>
+          <a href="homepage.html">Home</a>
+          <a href="books_onLoan.html" class="active">Books on Loan</a>
+          <li><a href="my_inventory.html">My Inventory</a></li>
+          <li><a href="#">Currently Reading</a></li>
+          <li><a href="#">Requests</a></li>
+        </ul>
       </nav>
       <div class="icon-bar">
         <!-- Search Icon -->
@@ -53,85 +56,123 @@
       <div class="page-title">
         <h2>Books on Loan</h2>
       </div>
-      <section class="book-grid">
-        <!-- Book placeholders with space for titles -->
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 1</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 2</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 3</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 4</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 5</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 6</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 7</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 8</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 9</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 10</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 11</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 12</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 13</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 14</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 15</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 16</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 17</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 18</p>
-        </div>
-        <div class="book-item">
-          <div class="book-placeholder"></div>
-          <p class="book-title">Book Title 19</p>
-        </div>
+      <section class="book-grid" id="bookContainer">
+        <!-- Books will be dynamically added here -->
       </section>
+
+      <div class="pagination">
+        <a href="#" class="prev" onclick="prevPage()">&laquo;</a>
+        <a href="#" class="page-number active" onclick="changePage(1)">1</a>
+        <a href="#" class="page-number" onclick="changePage(2)">2</a>
+        <a href="#" class="page-number" onclick="changePage(3)">3</a>
+        <a href="#" class="next" onclick="nextPage()">&raquo;</a>
+      </div>
     </main>
   </body>
+
+  <script>
+    // Simulated Book Data (Only 45 books)
+    const books = [
+      { title: "Book Title 1" },
+      { title: "Book Title 2" },
+      { title: "Book Title 3" },
+      { title: "Book Title 4" },
+      { title: "Book Title 5" },
+      { title: "Book Title 6" },
+      { title: "Book Title 7" },
+      { title: "Book Title 8" },
+      { title: "Book Title 9" },
+      { title: "Book Title 10" },
+      { title: "Book Title 11" },
+      { title: "Book Title 12" },
+      { title: "Book Title 13" },
+      { title: "Book Title 14" },
+      { title: "Book Title 15" },
+      { title: "Book Title 16" },
+      { title: "Book Title 17" },
+      { title: "Book Title 18" },
+      { title: "Book Title 19" },
+      { title: "Book Title 20" },
+      { title: "Book Title 21" },
+      { title: "Book Title 22" },
+      { title: "Book Title 23" },
+      { title: "Book Title 24" },
+      { title: "Book Title 25" },
+      { title: "Book Title 26" },
+      { title: "Book Title 27" },
+      { title: "Book Title 28" },
+      { title: "Book Title 29" },
+      { title: "Book Title 30" },
+      { title: "Book Title 31" },
+      { title: "Book Title 32" },
+      { title: "Book Title 33" },
+      { title: "Book Title 34" },
+      { title: "Book Title 35" },
+      { title: "Book Title 36" },
+      { title: "Book Title 37" },
+      { title: "Book Title 38" },
+      { title: "Book Title 39" },
+      { title: "Book Title 40" },
+      { title: "Book Title 41" },
+      { title: "Book Title 42" },
+      { title: "Book Title 43" },
+      { title: "Book Title 44" },
+      { title: "Book Title 45" },
+    ];
+
+    const booksPerPage = 15;
+    let currentPage = 1;
+    const totalPages = 3; // Only 3 pages
+
+    function displayBooks(page) {
+      const bookContainer = document.getElementById("bookContainer");
+      bookContainer.innerHTML = ""; // Clear previous books
+
+      const startIndex = (page - 1) * booksPerPage;
+      const endIndex = startIndex + booksPerPage;
+      const booksToShow = books.slice(startIndex, endIndex);
+
+      booksToShow.forEach((book) => {
+        const bookItem = document.createElement("div");
+        bookItem.classList.add("book-item");
+        bookItem.innerHTML = `
+          <div class="book-placeholder"></div>
+          <p class="book-title">${book.title}</p>
+        `;
+        bookContainer.appendChild(bookItem);
+      });
+
+      // Update active page
+      document.querySelectorAll(".page-number").forEach((el) => {
+        el.classList.remove("active");
+      });
+
+      document
+        .querySelector(`.pagination a:nth-child(${page + 1})`)
+        .classList.add("active");
+
+      currentPage = page;
+    }
+
+    function changePage(page) {
+      if (page >= 1 && page <= totalPages) {
+        displayBooks(page);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        changePage(currentPage - 1);
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) {
+        changePage(currentPage + 1);
+      }
+    }
+
+    // Load first page on start
+    document.addEventListener("DOMContentLoaded", () => displayBooks(1));
+  </script>
 </html>
