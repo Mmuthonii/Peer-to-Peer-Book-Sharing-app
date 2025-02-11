@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+    <link rel="stylesheet" href="styles/settings.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">OneMoreChapter</div>
+      <nav>
+        <a href="homepage.html">Home</a>
+        <a href="books_onLoan.html">Books on Loan</a>
+        <a href="my_inventory.html">My Inventory</a>
+        <a href="currently_reading.html">Currently Reading</a>
+        <a href="requests.html">Requests</a>
+      </nav>
+      <div class="icon-bar">
+        <!-- Search Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 2a8 8 0 015.293 13.707l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+          ></path>
+        </svg>
+        <!-- Messaging Icon -->
+        <a href="messages.html">
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+            ></path>
+          </svg>
+        </a>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown">
+          <a href="#" class="profile-icon">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+              ></path>
+            </svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile</a>
+            <a href="settings.html">Account Settings</a>
+            <a href="logout.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="page-title">Account Settings</h2>
+      <section class="settings-container">
+        <div class="profile-section">
+          <div class="profile-avatar"></div>
+          <p class="upload-photo">Upload Photo</p>
+          <p class="delete-account">Delete my account</p>
+        </div>
+        <div class="settings-form">
+          <form action="#" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" />
+
+            <label for="dob">Date of Birth</label>
+            <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" />
+
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+              <option value="" disabled selected></option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label for="location">Location</label>
+            <select id="location" name="location">
+              <option value="" disabled selected></option>
+              <option value="us">United States</option>
+              <option value="de">Germany</option>
+              <option value="uk">United Kingdom</option>
+            </select>
+
+            <button type="submit" class="save-button">Save changes</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

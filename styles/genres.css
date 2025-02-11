@@ -1,0 +1,76 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e5e1da;
+    color: #4a4a3d;
+    text-align: center;
+}
+
+/* Header */
+header {
+    background-color: #9cab85;
+    padding: 1rem 2rem;
+    width: 100%;
+    text-align: left;
+    font-style: italic;
+    font-size: 1.5rem;
+}
+
+/* Container */
+.genres-container {
+    max-width: 800px;
+    margin: 5rem auto;
+    text-align: center;
+}
+
+/* Subtitle */
+.subtitle {
+    font-style: italic;
+    font-size: 1rem;
+    color: #6c6c5f;
+    margin-bottom: 2rem;
+}
+
+/* Genres Grid */
+.genres-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* Genre Buttons */
+.genre-button {
+    background-color: #f8e5d1;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    color: #4a4a3d;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.genre-button:hover {
+    background-color: #e0c9b8;
+}
+
+/* Continue Button */
+.continue-button {
+    background-color: #9cab85;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.continue-button:hover {
+    background-color: #8aa17e;
+}

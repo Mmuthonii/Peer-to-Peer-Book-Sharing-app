@@ -112,93 +112,110 @@ nav a.active {
 
 .page-title {
     text-align: left;
-    margin: 5rem 0 5rem 13rem; /* Moves title left to align with books */
+    margin: 0rem 0 5rem 3rem; /* Moves title left to align with books */
     width: 100%;
     font-size: 2rem; /* Adjust the size */
 }
 
-/* Book Grid Styles */
-.book-grid {
-    display: grid;
-    grid-template-columns: repeat(5,0.5fr); /* 5 columns */
-    gap: 0rem; /* Spacing between books */
-    padding: 0 10rem;
-    justify-items:center;
-    margin-bottom: 10rem; /* Extra space above the footer */
-}
-
-.book-item {
-    text-align: center; /* Center book titles */
-}
-
-.book-placeholder {
-    width: 200px; /* Adjusted width for better fit */
-    height: 300px; /* Adjusted height for better fit */
-    background-color: #ececec;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.book-title {
-    margin-top: 1rem;
-    margin-bottom: 5rem;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-/* Browse More Books Button */
-.browse-more {
-    display: block;
-    margin: 2rem auto; /* Center the button */
-    padding: 0.5rem 1rem;
-    background-color: #8aa17e;
-    color: rgb(105, 67, 39);
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    width: 200px; /* Fixed width for the button */
-}
-
-.browse-more:hover {
-    background-color: #7a9a6e; /* Darker shade on hover */
-}
-
-.pagination {
+/* Book Details */
+.book-details {
     display: flex;
-    justify-content: center; /* Center pagination */
-    margin: 2rem 0; /* Space above and below */
-    gap: 10px; /* Space between numbers */
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 5rem;
+    margin-left: 1rem;
 }
 
-.pagination a {
-    text-decoration: none;
-    color: #4a4a3d;
-    background-color: #ddd;
-    padding: 8px 12px;
+/* Book Image Placeholder */
+.book-image {
+    width: 300px;
+    height: 400px;
+    background-color: #ececec;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
 }
 
-.pagination a:hover {
-    background-color: #9cab85; /* Change color on hover */
-    color: white;
+/* Book Info */
+.book-info {
+    flex: 1;
+    
 }
 
-.pagination .active {
-    background-color: #6c9e6b;
-    color: white;
-    font-weight: bold;
+.book-info h2 {
+    font-size: 2rem;
 }
 
+.book-info p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
 
-/* Footer */
-footer {
-    background-color: #eee;
-    padding: 1rem;
+/* Loaned By Section */
+.loaned-by {
+    padding: 2rem;
+    margin-left: 1rem;
+}
+
+.loaned-by hr {
+    margin: 0.5rem 0;
+}
+
+.users {
+    display: flex;
+    gap: 2rem;
+}
+
+/* User Profile */
+.user {
     text-align: center;
-    font-size: 0.9rem;
 }
 
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #ececec;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.loan-duration {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Buttons */
+.request-button,
+.message-button {
+    display: block;
+    width: 100px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.request-button {
+    background-color: #9cab85;
+    color: white;
+}
+
+.message-button {
+    background-color: #b48a64;
+    color: white;
+}
+
+.request-button:hover {
+    background-color: #8aa17e;
+}
+
+.message-button:hover {
+    background-color: #a07d5a;
+}
 
 /* Profile Dropdown Container */
 .profile-dropdown {
@@ -246,4 +263,9 @@ footer {
 
 .profile-icon .icon:hover {
     transform: scale(1.1);
+}
+
+main {
+    margin-top: 5rem; /* Adjust this value to move content further down */
+    margin-left: 10rem;
 }
