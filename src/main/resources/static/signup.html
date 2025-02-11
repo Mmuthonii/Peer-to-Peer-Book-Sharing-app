@@ -5,142 +5,260 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        .container { width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
-        input, select { width: 100%; padding: 10px; margin: 5px 0; }
-        button { width: 100%; padding: 10px; background-color: green; color: white; border: none; cursor: pointer; }
-        .message { color: red; font-weight: bold; }
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e1da;
+            color: #4a4a3d;
+        }
+
+        /* Header */
+        header {
+            background-color: #9cab85;
+            padding: 1rem 2rem;
+
+        }
+        header h1 {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #4a4a3d;
+        }
+
+
+        /* Centering the Main Layout */
+        main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 85vh;
+            padding: 2rem;
+        }
+
+        /* Adjusting Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #dacbb3;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 350px; /* Matching login proportions */
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Title */
+        .container h2 {
+            font-size: 1.5rem;
+            color: #4a4a3d;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Form Group Alignment */
+        .form-group {
+            text-align: left;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        /* Labels */
+        label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Inputs and Select Fields */
+        input, select {
+            width: 95%;
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        /* Fixing Password Checkbox Alignment */
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-left: 5px;
+        }
+
+        /* Sign Up Button */
+        .signup-button {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #9cab85;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .signup-button:hover {
+            background-color: #8aa17e;
+        }
+
+        /* Centered Login Redirect Text */
+        .login-text {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* Link Styling */
+        .login-text a {
+            color: #4a4a3d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive Fixes */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+                max-width: 350px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 95%;
+                max-width: 320px;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            input, select {
+                padding: 10px;
+                font-size: 0.95rem;
+            }
+
+            .signup-button {
+                padding: 10px;
+                font-size: 0.95rem;
+            }
+        }
+
     </style>
+
+
 </head>
 <body>
 
-<div class="container">
-    <h2>Sign Up</h2>
+<header>
+    <h1>OneMoreChapter</h1>
+</header>
 
-    <label for="username">Full Name</label>
-    <input type="text" id="username" placeholder="Enter your full name" required>
+<main>
+    <div class="container">
+        <h2>Sign Up</h2>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" placeholder="Enter your email" required>
+        <div class="form-group">
+            <label for="username">Full Name</label>
+            <input type="text" id="username" placeholder="Enter your full name" required>
+        </div>
 
-    <label for="dob">Date of Birth</label>
-    <input type="date" id="dob" required>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
 
-    <label>Gender</label>
-    <select id="gender" required>
-        <option value="">-- Select Gender --</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-    </select>
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" required>
+        </div>
 
-    <label for="city">City</label>
-    <select id="city" required>
-        <option value="">-- Select City --</option>
-        <option value="Berlin">Berlin</option>
-        <option value="Munich">Munich</option>
-        <option value="Hamburg">Hamburg</option>
-        <option value="Cologne">Cologne</option>
-        <option value="Frankfurt">Frankfurt</option>
-        <option value="Stuttgart">Stuttgart</option>
-        <option value="Düsseldorf">Düsseldorf</option>
-        <option value="Leipzig">Leipzig</option>
-        <option value="Dortmund">Dortmund</option>
-        <option value="Essen">Essen</option>
-        <option value="Bremen">Bremen</option>
-        <option value="Dresden">Dresden</option>
-        <option value="Hanover">Hanover</option>
-        <option value="Nuremberg">Nuremberg</option>
-        <option value="Duisburg">Duisburg</option>
-        <option value="Bochum">Bochum</option>
-    </select>
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+                <option value="">-- Select Gender --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" placeholder="Enter your password" required>
-    <input type="checkbox" id="togglePassword"> Show Password
+        <div class="form-group">
+            <label for="city">City</label>
+            <select id="city" required>
+                <option value="">-- Select City --</option>
+                <option value="Berlin">Berlin</option>
+                <option value="Munich">Munich</option>
+                <option value="Hamburg">Hamburg</option>
+                <option value="Cologne">Cologne</option>
+                <option value="Frankfurt">Frankfurt</option>
+                <option value="Stuttgart">Stuttgart</option>
+                <option value="Düsseldorf">Düsseldorf</option>
+                <option value="Leipzig">Leipzig</option>
+                <option value="Dortmund">Dortmund</option>
+                <option value="Essen">Essen</option>
+                <option value="Bremen">Bremen</option>
+                <option value="Dresden">Dresden</option>
+                <option value="Hanover">Hanover</option>
+                <option value="Nuremberg">Nuremberg</option>
+                <option value="Duisburg">Duisburg</option>
+                <option value="Bochum">Bochum</option>
+            </select>
+        </div>
 
-    <label for="confirmPassword">Confirm Password</label>
-    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
-    <input type="checkbox" id="toggleConfirmPassword"> Show Password
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <input type="checkbox" id="togglePassword">
+        </div>
 
-    <button onclick="signUp()">Sign Up</button>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+            <input type="checkbox" id="toggleConfirmPassword">
+        </div>
 
-    <p class="message" id="message"></p>
-    <p>Already have an account? <a href="index.html">Login here</a></p>
-</div>
+        <button class="signup-button" onclick="signUp()">Sign Up</button>
+
+        <p class="message" id="message"></p>
+        <p>Already have an account? <a href="index.html">Login here</a></p>
+    </div>
+</main>
 
 <script>
     function signUp() {
-        const username = document.getElementById("username").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const dob = document.getElementById("dob").value.trim();
-        const gender = document.getElementById("gender").value;
-        const city = document.getElementById("city").value;
-        const password = document.getElementById("password").value.trim();
-        const confirmPassword = document.getElementById("confirmPassword").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const dob = document.getElementById("dob").value.trim();
+    const gender = document.getElementById("gender").value.trim();
+    const location = document.getElementById("city").value.trim();
 
-        // 🚀 Validate if all fields are filled correctly
-        if (!username || !email || !dob || !gender || !city || !password || !confirmPassword) {
-            document.getElementById("message").textContent = "All fields are required!";
-            return;
-        }
-
-        // 🚀 Validate Password Match
-        if (password !== confirmPassword) {
-            document.getElementById("message").textContent = "Passwords do not match!";
-            return;
-        }
-
-        // 🚀 Ensure City is Selected
-        if (city === "") {
-            document.getElementById("message").textContent = "Please select a city!";
-            return;
-        }
-
-        // 🚀 Ensure Email is Valid
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(email)) {
-            document.getElementById("message").textContent = "Enter a valid email!";
-            return;
-        }
-
-        // 🚀 Ensure Password Length is at Least 6 Characters
-        if (password.length < 6) {
-            document.getElementById("message").textContent = "Password must be at least 6 characters!";
-            return;
-        }
-
-        // Store user data in Session Storage for later use
-        sessionStorage.setItem("userEmail", email);
-
-        // 🚀 Send Data to Backend
-        fetch("http://localhost:8080/users/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, dob, gender, city, password })
-        })
-            .then(response => response.text())
-            .then(data => {
-            document.getElementById("message").textContent = data;
-            if (data === "User registered successfully!") {
-                alert("Signup successful! Redirecting to genre selection...");
-                window.location.href = "genre_selection.html"; // Redirect to genre selection page
-            }
-        })
-            .catch(error => console.error("Error:", error));
+    if (!username || !email || !password || !dob || !gender || !location) {
+        alert("Please fill all fields.");
+        return;
     }
-    //  Toggle Password Visibility for "Password" Field
-    document.getElementById("togglePassword").addEventListener("click", function() {
-        let passwordField = document.getElementById("password");
-        passwordField.type = this.checked ? "text" : "password";
-    });
 
-    //  Toggle Password Visibility for "Confirm Password" Field
-    document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
-        let confirmPasswordField = document.getElementById("confirmPassword");
-        confirmPasswordField.type = this.checked ? "text" : "password";
-    });
+    const user = { username, email, password, dob, gender, location };
+
+    fetch("http://localhost:8080/users/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+    })
+        .then(response => response.text())
+        .then(data => {
+        alert(data);
+        if (data.includes("User registered successfully")) {
+            window.location.href = "index.html"; // Redirect to login
+        }
+    })
+        .catch(error => console.error("Signup failed:", error));
+}
+
 </script>
-
 
 </body>
 </html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e1da;
+            color: #4a4a3d;
+        }
+
+        header {
+            background-color: #9cab85;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+
+        header .logo {
+            font-size: 1.5rem; /* Slightly larger for better readability */
+            font-style: italic;
+            color: #4a4a3d;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icons .icon {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ffffff;
+            position: relative;
+        }
+
+
+        .search-popup {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-popup input {
+            padding: 5px;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 60px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #4a4a3d;
+        }
+
+        .dropdown a:hover {
+            background-color: #f0f0f0;
+        }
+        /* Page Title */
+        .page-title {
+            text-align: left;
+            margin: 3rem 0 2rem 10rem;
+            font-size: 2rem;
+        }
+
+        /* Section Titles */
+        h3 {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-left: 10rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 80%;
+            margin: 2rem auto;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            font-size: 1.2rem;
+            font-style: italic;
+            background-color: #c9c6a9;
+        }
+
+        /* Book and User Placeholders */
+        .book-placeholder {
+            width: 60px;
+            height: 90px;
+            background-color: #ececec;
+            border-radius: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .book-title {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 1rem;
+            color: #4a4a3d;
+        }
+
+        .user-placeholder {
+            width: 40px;
+            height: 40px;
+            background-color: #f3e4d7;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        /* Status Styling */
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #f8d7a8;
+            color: #4a4a3d;
+            font-size: 0.9rem;
+            font-style: italic;
+            border-radius: 5px;
+        }
+
+        .pickup, .dropoff {
+            display: block;
+            font-size: 0.9rem;
+            color: #4a4a3d;
+            font-weight: bold;
+        }
+
+        /* Action Buttons */
+        .accept-btn {
+            background-color: #9cab85;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .reject-btn {
+            background-color: #c96c6c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .accept-btn:hover {
+            background-color: #7a9a6e;
+        }
+
+        .reject-btn:hover {
+            background-color: #b25050;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">OneMoreChapter</div>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="loan.html">Books on Loan</a></li>
+            <li><a href="inventory.html">My Inventory</a></li>
+            <li><a href="reading.html">Currently Reading</a></li>
+            <li><a href="requests.html">Requests</a></li>
+        </ul>
+    </nav>
+    <div class="icons">
+        <div class="icon search-icon" onclick="toggleSearchPopup()">🔍</div>
+        <div class="icon messages-icon" onclick="window.location.href='messages.html'">💬</div>
+        <div class="icon profile-icon" onclick="toggleDropdown()">👤</div>
+        <div class="dropdown" id="dropdownMenu">
+            <a href="profile.html">My Profile</a>
+            <a href="#" onclick="logout()">Log Out</a>
+        </div>
+        <div class="language" onclick="toggleLanguage()">EN/DE</div>
+    </div>
+    <div class="search-popup" id="searchPopup">
+        <input type="text" id="navSearchInput" placeholder="Search for books..." onkeydown="handleSearch(event)">
+        <button onclick="searchBooksFromNav()">Search</button>
+    </div>
+</header>
+
+
+<main>
+    <div class="page-title">
+        <h2>Requests</h2>
+
+        <ul id="notificationList"></ul>
+    </div>
+
+    <!-- Books I Requested -->
+    <section>
+        <h3>Books I Requested</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Loaner</th>
+                <th>Requested Duration</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody id="requestedBooksTable">
+            <!-- Requests will be dynamically loaded here -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Books Requested From Me -->
+    <section>
+        <h3>Books Requested From Me</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Book</th>
+                <th>Requester</th>
+                <th>Requested Duration</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="incomingRequestsTable">
+            <!-- Requests will be dynamically loaded here -->
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        loadRequestedBooks();
+        loadIncomingRequests();
+        loadOwnerNotifications();
+    });
+
+    // ✅ Function to toggle search popup visibility
+    function toggleSearchPopup() {
+        const popup = document.querySelector(".search-popup");
+        popup.style.display = popup.style.display === "block" ? "none" : "block";
+    }
+
+    // ✅ Function to toggle dropdown visibility
+    function toggleDropdown() {
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    // ✅ Function to handle language toggling
+    function toggleLanguage() {
+        alert("Language toggled!");
+    }
+
+    // ✅ Logout function
+    function logout() {
+        console.log("🔴 Logging out...");
+
+        // Clear session and local storage
+        sessionStorage.clear();
+        localStorage.clear();
+
+        console.log("✅ Storage cleared. Redirecting to login page...");
+
+        // Redirect to login page
+        window.location.href = "index.html";
+    }
+
+    // ✅ Function to handle Enter key press in search input
+    function handleSearch(event) {
+        if (event.key === "Enter") {
+            searchBooksFromNav();
+        }
+    }
+
+    // ✅ Function to execute book search from navigation bar
+    function searchBooksFromNav() {
+        const query = document.getElementById("navSearchInput").value.trim();
+        if (!query) {
+            alert("Please enter a search query!");
+            return;
+        }
+        window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
+    }
+
+    // ✅ Fetch Requests Sent by the User
+    async function loadRequestedBooks() {
+        const userId = sessionStorage.getItem("userId");
+
+        if (!userId) {
+            console.error("🚨 User not logged in!");
+            window.location.href = "index.html";
+            return;
+        }
+
+        try {
+            console.log(`Fetching requests sent by user: ${userId}`);
+            const response = await fetch(`http://localhost:8080/requests/sent/${userId}`);
+            if (!response.ok) throw new Error("Failed to fetch requests.");
+            const requestedBooks = await response.json();
+            console.log("✅ Sent Requests:", requestedBooks);
+            populateTable("requestedBooksTable", requestedBooks, false);
+        } catch (error) {
+            console.error("❌ Error fetching requested books:", error);
+        }
+    }
+
+    // ✅ Fetch Incoming Requests
+    async function loadIncomingRequests() {
+        const userId = sessionStorage.getItem("userId");
+
+        if (!userId) {
+            console.error("🚨 User not logged in!");
+            window.location.href = "index.html";
+            return;
+        }
+
+        try {
+            console.log(`Fetching requests received by user: ${userId}`);
+            const response = await fetch(`http://localhost:8080/requests/received/${userId}`);
+            if (!response.ok) throw new Error("Failed to fetch incoming requests.");
+            const requests = await response.json();
+            console.log("✅ Received Requests:", requests);
+            populateRequestsTable(requests);
+        } catch (error) {
+            console.error("❌ Error fetching incoming requests:", error);
+        }
+    }
+
+    // ✅ Fetch Owner Notifications
+    async function loadOwnerNotifications() {
+        const userId = sessionStorage.getItem("userId");
+
+        if (!userId) {
+            console.error("🚨 User not logged in!");
+            return;
+        }
+
+        try {
+            console.log(`Fetching notifications for user: ${userId}`);
+            const response = await fetch(`http://localhost:8080/notifications/${userId}`);
+            if (!response.ok) throw new Error("Failed to fetch notifications.");
+            const notifications = await response.json();
+            console.log("✅ Notifications:", notifications);
+            displayNotifications(notifications);
+        } catch (error) {
+            console.error("❌ Error fetching notifications:", error);
+        }
+    }
+
+    // ✅ Display Notifications
+    function displayNotifications(notifications) {
+        const notificationList = document.getElementById("notificationList");
+        notificationList.innerHTML = "";
+
+        if (notifications.length === 0) {
+            notificationList.innerHTML = "<li>No notifications.</li>";
+            return;
+        }
+
+        notifications.forEach(notification => {
+            const li = document.createElement("li");
+            li.textContent = notification.message;
+
+            if (!notification.read) {
+                li.innerHTML += ` <button onclick="markAsRead('${notification.id}')">Mark as Read</button>`;
+            }
+
+            notificationList.appendChild(li);
+        });
+    }
+
+    // ✅ Mark Notification as Read
+    async function markAsRead(notificationId) {
+        try {
+            await fetch(`http://localhost:8080/notifications/mark-read/${notificationId}`, {
+                method: "PUT"
+            });
+            console.log(`✅ Notification ${notificationId} marked as read.`);
+            loadOwnerNotifications(); // ✅ Refresh notifications
+        } catch (error) {
+            console.error("❌ Error marking notification as read:", error);
+        }
+    }
+
+    // ✅ Accept or Reject a Request
+    async function respondToRequest(requestId, status) {
+        try {
+            const response = await fetch(`http://localhost:8080/requests/respond/${requestId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status })
+            });
+
+            if (response.ok) {
+                alert(`✅ Request ${status}`);
+                console.log(`✅ Request ${requestId} updated to ${status}`);
+                loadIncomingRequests();  // ✅ Refresh requests
+                loadOwnerNotifications();  // ✅ Refresh notifications
+            } else {
+                throw new Error("Failed to update request.");
+            }
+        } catch (error) {
+            console.error("❌ Error updating request:", error);
+        }
+    }
+
+    // ✅ Populate Incoming Requests Table
+    function populateRequestsTable(requests) {
+        const table = document.getElementById("incomingRequestsTable");
+        table.innerHTML = "";
+
+        if (requests.length === 0) {
+            table.innerHTML = `<tr><td colspan="4" style="text-align:center;">No requests found.</td></tr>`;
+            return;
+        }
+
+        requests.forEach(request => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+        <td>
+            <div class="book-placeholder">
+                <img src="${request.bookImage || 'https://via.placeholder.com/70x100'}" alt="${request.bookTitle}">
+            </div>
+            <span class="book-title">${request.bookTitle}</span>
+        </td>
+        <td>${request.senderName}</td>
+        <td>${request.startDate || "N/A"} - ${request.endDate || "N/A"}</td>
+        <td>
+            <button class="accept-btn" onclick="respondToRequest('${request.id}', 'Accepted')">Accept</button>
+            <button class="reject-btn" onclick="respondToRequest('${request.id}', 'Rejected')">Reject</button>
+        </td>
+    `;
+            table.appendChild(row);
+        });
+    }
+
+    // ✅ Populate Generic Table
+    function populateTable(tableId, requests, allowActions) {
+        const table = document.getElementById(tableId);
+        table.innerHTML = "";
+
+        if (requests.length === 0) {
+            table.innerHTML = `<tr><td colspan="4" style="text-align:center;">No requests found.</td></tr>`;
+            return;
+        }
+
+        requests.forEach(request => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+        <td>
+            <div class="book-placeholder"></div>
+            <span class="book-title">${request.bookTitle}</span>
+        </td>
+        <td>
+            <div class="user-placeholder"></div>
+            <span>${request.senderName || request.receiverName}</span>
+        </td>
+        <td>${request.startDate || "N/A"} - ${request.endDate || "N/A"}</td>
+        <td>${allowActions ? `<button class="accept-btn" onclick="respondToRequest('${request.id}', 'Accepted')">Accept</button>
+                              <button class="reject-btn" onclick="respondToRequest('${request.id}', 'Rejected')">Reject</button>`
+                              : `<span class="status">${request.status}</span>`}</td>
+    `;
+            table.appendChild(row);
+        });
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currently Reading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e5e1da;
+            color: #4a4a3d;
+        }
+
+        header {
+            background-color: #9cab85;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+
+        header .logo {
+            font-size: 1.5rem; /* Slightly larger for better readability */
+            font-style: italic;
+            color: #4a4a3d;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icons .icon {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #4a4a3d;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background-color: #f5f5f0;
+        }
+
+        .search-popup {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 60px;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-popup input {
+            padding: 10px;
+            font-size: 1rem;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        /* Page Title */
+        .page-title {
+            text-align: left;
+            margin: 3rem 0 2rem 10rem;
+            font-size: 2rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 80%;
+            margin: 2rem auto;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            font-size: 1.2rem;
+            font-style: italic;
+            background-color: #c9c6a9;
+        }
+
+        /* Book Placeholder */
+        .book-placeholder {
+            width: 70px;
+            height: 100px;
+            background-color: #ececec;
+            border-radius: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Book Titles */
+        .book-title {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 1rem;
+            color: #4a4a3d;
+        }
+
+        /* User Placeholder */
+        .user-placeholder {
+            width: 40px;
+            height: 40px;
+            background-color: #f3e4d7;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        /* Rating Stars */
+        .stars {
+            font-size: 1.2rem;
+            color: #c96c6c;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">OneMoreChapter</div>
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="loan.html">Books on Loan</a></li>
+            <li><a href="inventory.html">My Inventory</a></li>
+            <li><a href="reading.html">Currently Reading</a></li>
+            <li><a href="requests.html">Requests</a></li>
+        </ul>
+    </nav>
+    <div class="icons">
+        <div class="icon search-icon" onclick="toggleSearchPopup()">🔍</div>
+        <div class="icon messages-icon" onclick="window.location.href='messages.html'">💬</div>
+        <div class="icon profile-icon" onclick="toggleDropdown()">👤</div>
+        <div class="dropdown" id="dropdownMenu">
+            <a href="profile.html">My Profile</a>
+            <a href="#" onclick="logout()">Log Out</a>
+        </div>
+        <div class="language" onclick="toggleLanguage()">EN/DE</div>
+    </div>
+    <div class="search-popup" id="searchPopup">
+        <input type="text" id="navSearchInput" placeholder="Search for books..." onkeydown="handleSearch(event)">
+        <button onclick="searchBooksFromNav()">Search</button>
+    </div>
+</header>
+
+<main>
+    <div class="page-title">
+        <h2>Currently Reading</h2>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Borrowed Books</th>
+            <th>From</th>
+            <th>Duration</th>
+            <th>Rate</th>
+        </tr>
+        </thead>
+        <tbody id="readingTable">
+        <!-- Books will be dynamically inserted here -->
+        </tbody>
+    </table>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        loadCurrentlyReading();
+    });
+
+    async function loadCurrentlyReading() {
+        const userId = sessionStorage.getItem("userId");
+
+        if (!userId) {
+            console.error("User not logged in!");
+            window.location.href = "index.html";
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/requests/${userId}`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch reading data.");
+            }
+            const readingData = await response.json();
+            populateReadingTable(readingData);
+        } catch (error) {
+            console.error("Error fetching currently reading books:", error);
+        }
+    }
+
+    function populateReadingTable(readingData) {
+        const tableBody = document.getElementById("readingTable");
+        tableBody.innerHTML = "";
+
+        if (readingData.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No books currently being read.</td></tr>`;
+            return;
+        }
+
+        readingData.forEach(entry => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>
+                    <div class="book-placeholder">
+                        <img src="${entry.bookImage || 'https://via.placeholder.com/70x100'}" alt="${entry.bookTitle}">
+                    </div>
+                    <span class="book-title">${entry.bookTitle}</span>
+                </td>
+                <td>
+                    <div class="user-placeholder"></div>
+                    <span>${entry.senderName}</span>
+                </td>
+                <td>${entry.startDate || "N/A"} - ${entry.endDate || "Ongoing"}</td>
+                <td class="stars">${generateStars(entry.rating)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function generateStars(rating) {
+        const filledStars = "⭐".repeat(rating);
+        const emptyStars = "★".repeat(5 - rating);
+        return filledStars + emptyStars;
+    }
+    // Function to toggle the search popup visibility
+    function toggleSearchPopup() {
+        const popup = document.querySelector(".search-popup");
+        popup.style.display = popup.style.display === "block" ? "none" : "block";
+    }
+
+    // Function to toggle the dropdown visibility
+    function toggleDropdown() {
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    // Function to handle language toggling
+    function toggleLanguage() {
+        alert("Language toggled!");
+    }
+    function logout() {
+        console.log("🔴 Logging out...");
+
+        // Clear session and local storage
+        sessionStorage.clear();
+        localStorage.clear();
+
+        console.log("✅ Storage cleared. Redirecting to login page...");
+
+        // Redirect to login page
+        window.location.href = "index.html";
+    }
+    // Function to handle Enter key press in search input
+    function handleSearch(event) {
+        if (event.key === "Enter") {
+            searchBooksFromNav();
+        }
+    }
+
+    // Function to execute book search from the navigation bar
+    function searchBooksFromNav() {
+        const query = document.getElementById("navSearchInput").value.trim();
+        if (!query) {
+            alert("Please enter a search query!");
+            return;
+        }
+        window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
+    }
+</script>
+
+</body>
+</html>
