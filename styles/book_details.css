@@ -1,0 +1,151 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #4a4a3d;
+}
+
+/* Header */
+header {
+    background-color: #9cab85;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #4a4a3d;
+}
+
+nav {
+    display: flex;
+    gap: 15px; /* Matches the second code */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    margin-right: 0.7rem;
+    padding: 0 0.5rem; /* Adds spacing inside each tab */
+}
+
+
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Icons */
+.icon-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Book Details */
+.book-details {
+    display: flex;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 3rem;
+}
+
+/* Book Image Placeholder */
+.book-image {
+    width: 300px;
+    height: 400px;
+    background-color: #ececec;
+    border-radius: 5px;
+}
+
+/* Book Info */
+.book-info {
+    flex: 1;
+}
+
+.book-info h2 {
+    font-size: 2rem;
+}
+
+.book-info p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+/* Loaned By Section */
+.loaned-by {
+    padding: 2rem;
+}
+
+.loaned-by hr {
+    margin: 0.5rem 0;
+}
+
+.users {
+    display: flex;
+    gap: 2rem;
+}
+
+/* User Profile */
+.user {
+    text-align: center;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #ececec;
+    border-radius: 50%;
+}
+
+.user-name {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.loan-duration {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Buttons */
+.request-button,
+.message-button {
+    display: block;
+    width: 100px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.request-button {
+    background-color: #9cab85;
+    color: white;
+}
+
+.message-button {
+    background-color: #b48a64;
+    color: white;
+}
+
+.request-button:hover {
+    background-color: #8aa17e;
+}
+
+.message-button:hover {
+    background-color: #a07d5a;
+}

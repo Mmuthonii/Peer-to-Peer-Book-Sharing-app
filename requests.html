@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Requests</title>
+    <link rel="stylesheet" href="styles/requests.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">OneMoreChapter</div>
+      <nav>
+        <a href="homepage.html">Home</a>
+        <a href="books_onLoan.html">Books on Loan</a>
+        <a href="my_inventory.html">My Inventory</a>
+        <a href="currently_reading.html">Currently Reading</a>
+        <a href="requests.html" class="active">Requests</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="page-title">
+        <h2>Requests</h2>
+      </div>
+
+      <!-- Books I Requested Table -->
+      <section>
+        <h3>Books I Requested</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Loaner</th>
+              <th>Requested Duration</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="book-placeholder"></div>
+                <span class="book-title">Book Title</span>
+              </td>
+              <td>
+                <div class="user-placeholder"></div>
+                <span>Name</span>
+              </td>
+              <td>31.01.2025 - 15.02.2025</td>
+              <td>
+                <span class="status">Accepted/Rejected</span><br />
+                <span class="pickup">Pick-up: Picked by the loaner</span><br />
+                <span class="dropoff">Drop-off: Picked by the loaner</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Books Requested From Me Table -->
+      <section>
+        <h3>Books Requested From Me</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Book</th>
+              <th>Requester</th>
+              <th>Requested Duration</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="book-placeholder"></div>
+                <span class="book-title">Book Title</span>
+              </td>
+              <td>
+                <div class="user-placeholder"></div>
+                <span>Name</span>
+              </td>
+              <td>31.01.2025 - 15.02.2025</td>
+              <td>
+                <button class="accept-btn">Accept</button>
+                <button class="reject-btn">Reject</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>
