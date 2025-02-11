@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Inventory</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e5e1da;
+        color: #4a4a3d;
+      }
+
+      header {
+        background-color: #9cab85;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        position: relative;
+      }
+
+      header .logo {
+        font-size: 1.5rem; /* Slightly larger for better readability */
+        font-style: italic;
+        color: #4a4a3d;
+        font-weight: bold;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        margin: 0;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .icons .icon {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #ffffff;
+        position: relative;
+      }
+
+      .search-popup {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 100px;
+        background-color: #ffffff;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-popup input {
+        padding: 5px;
+        font-size: 1rem;
+        width: 200px;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 60px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .dropdown a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #4a4a3d;
+      }
+
+      .dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        margin: 40px auto;
+        max-width: 1200px;
+        text-align: center;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 15px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #c3c6a8;
+        font-size: 1rem;
+      }
+
+      .book-image {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .add-button {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: #9cab85;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+
+      .delete-button,
+      .edit-button {
+        cursor: pointer;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        border: none;
+      }
+
+      .delete-button {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .edit-button {
+        background-color: #ffa726;
+        color: white;
+      }
+
+      .form {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #dacbb3;
+        border-radius: 10px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        width: 90%;
+        margin: 10px 0;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      button:hover {
+        background-color: #8aa274;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">OneMoreChapter</div>
+      <nav>
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="loan.html">Books on Loan</a></li>
+          <li><a href="inventory.html">My Inventory</a></li>
+          <li><a href="reading.html">Currently Reading</a></li>
+          <li><a href="requests.html">Requests</a></li>
+        </ul>
+      </nav>
+      <div class="icons">
+        <div class="icon search-icon" onclick="toggleSearchPopup()">🔍</div>
+        <div
+          class="icon messages-icon"
+          onclick="window.location.href='messages.html'"
+        >
+          💬
+        </div>
+        <div class="icon profile-icon" onclick="toggleDropdown()">👤</div>
+        <div class="dropdown" id="dropdownMenu">
+          <a href="profile.html">My Profile</a>
+          <a href="#" onclick="logout()">Log Out</a>
+        </div>
+        <div class="language" onclick="toggleLanguage()">EN/DE</div>
+      </div>
+      <div class="search-popup" id="searchPopup">
+        <input
+          type="text"
+          id="navSearchInput"
+          placeholder="Search for books..."
+          onkeydown="handleSearch(event)"
+        />
+        <button onclick="searchBooksFromNav()">Search</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <h1>My Inventory</h1>
+      <button class="add-button" onclick="showAddForm()">+ Add Book</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Condition</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTable"></tbody>
+      </table>
+    </div>
+
+    <div class="form" id="addEditForm">
+      <h3 id="formTitle">Add Book</h3>
+      <input type="text" id="bookTitle" placeholder="Book Title" required />
+      <input type="text" id="bookAuthor" placeholder="Author" />
+      <select id="bookGenre">
+        <option value="" disabled selected>Choose Genre</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Non-Fiction">Non-Fiction</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Fantasy">Fantasy</option>
+        <option value="Science Fiction">Science Fiction</option>
+        <option value="Biography">Biography</option>
+      </select>
+      <select id="bookCondition">
+        <option value="" disabled selected>Condition</option>
+        <option value="New">New</option>
+        <option value="Somewhat Old">Somewhat Old</option>
+        <option value="Old">Old</option>
+      </select>
+      <textarea id="bookDescription" placeholder="Description"></textarea>
+
+      <!-- ✅ Image Upload & Preview -->
+      <img
+        id="bookImagePreview"
+        src="https://via.placeholder.com/150"
+        style="width: 100px; height: 150px; display: block; margin: 10px auto"
+      />
+      <input type="file" id="bookImage" accept="image/*" />
+
+      <button onclick="saveBook()">Save</button>
+      <button onclick="hideForm()">Cancel</button>
+    </div>
+
+    <script>
+      // Function to handle Enter key press in search input
+      function handleSearch(event) {
+        if (event.key === "Enter") {
+          searchBooksFromNav();
+        }
+      }
+
+      // Function to execute book search from the navigation bar
+      function searchBooksFromNav() {
+        const query = document.getElementById("navSearchInput").value.trim();
+        if (!query) {
+          alert("Please enter a search query!");
+          return;
+        }
+        window.location.href = `search-results.html?query=${encodeURIComponent(
+          query
+        )}`;
+      }
+      // Function to toggle the search popup visibility
+      function toggleSearchPopup() {
+        const popup = document.querySelector(".search-popup");
+        popup.style.display =
+          popup.style.display === "block" ? "none" : "block";
+      }
+
+      // Function to toggle the dropdown visibility
+      function toggleDropdown() {
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+      }
+
+      // Function to handle language toggling
+      function toggleLanguage() {
+        alert("Language toggled!");
+      }
+      function logout() {
+        console.log("🔴 Logging out...");
+
+        // Clear session and local storage
+        sessionStorage.clear();
+        localStorage.clear();
+
+        console.log("✅ Storage cleared. Redirecting to login page...");
+
+        // Redirect to login page
+        window.location.href = "index.html";
+      }
+
+      const ownerId =
+        sessionStorage.getItem("userId") || localStorage.getItem("userId");
+      if (!ownerId) {
+        alert("User not logged in! Redirecting to login...");
+        window.location.href = "index.html";
+      }
+
+      // ✅ Load Books in Inventory (Fetch only books belonging to the logged-in user)
+      async function loadInventory() {
+        const ownerId =
+          sessionStorage.getItem("userId") || localStorage.getItem("userId");
+
+        if (!ownerId) {
+          alert("User not logged in! Redirecting to login...");
+          window.location.href = "index.html";
+          return;
+        }
+
+        console.log("Fetching books for user ID:", ownerId); // Debugging
+
+        try {
+          const response = await fetch(
+            `http://localhost:8080/books/owner/${ownerId}`
+          );
+          console.log("API Response:", response); // Debugging
+
+          if (!response.ok) {
+            throw new Error(`Failed to fetch books: ${await response.text()}`);
+          }
+
+          const books = await response.json();
+          if (!Array.isArray(books)) {
+            throw new Error("Invalid response format (Expected an array)");
+          }
+
+          console.log("Books Loaded:", books); // Debugging
+
+          const table = document.getElementById("inventoryTable");
+          table.innerHTML = ""; // Clear previous content
+
+          if (books.length === 0) {
+            table.innerHTML = "<tr><td colspan='7'>No books found.</td></tr>";
+          } else {
+            books.forEach((book) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                    <td><img src="${
+                      book.image || "https://via.placeholder.com/50"
+                    }" class="book-image"></td>
+                    <td>${book.title}</td>
+                    <td>${book.author || "-"}</td>
+                    <td>${book.genre || "-"}</td>
+                    <td>${book.condition || "-"}</td>
+                    <td>${book.description || "-"}</td>
+                    <td>
+                        <button class="edit-button" onclick="editBook(${
+                          book.id
+                        })">Edit</button>
+                        <button class="delete-button" onclick="deleteBook(${
+                          book.id
+                        })">Delete</button>
+                    </td>
+                `;
+              table.appendChild(row);
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching inventory:", error);
+          alert("Could not load books.");
+        }
+      }
+
+      // ✅ Show Add/Edit Book Form
+      function showAddForm(isEdit = false, book = {}) {
+        document.getElementById("addEditForm").style.display = "block";
+        document.getElementById("formTitle").textContent = isEdit
+          ? "Edit Book"
+          : "Add Book";
+
+        // Pre-fill form if editing
+        document.getElementById("bookTitle").value = book.title || "";
+        document.getElementById("bookAuthor").value = book.author || "";
+        document.getElementById("bookGenre").value = book.genre || "";
+        document.getElementById("bookCondition").value = book.condition || "";
+        document.getElementById("bookDescription").value =
+          book.description || "";
+
+        // Change button behavior
+        const saveButton = document.querySelector("#addEditForm button");
+        saveButton.setAttribute(
+          "onclick",
+          isEdit ? `updateBook(${book.id})` : "saveBook()"
+        );
+      }
+
+      // ✅ Hide Form
+      function hideForm() {
+        document.getElementById("addEditForm").style.display = "none";
+      }
+
+      // ✅ Save a New Book
+      async function saveBook() {
+        console.log("Saving book...");
+
+        const ownerId =
+          sessionStorage.getItem("userId") || localStorage.getItem("userId");
+
+        if (!ownerId || ownerId === "0") {
+          alert("User not logged in! Redirecting to login...");
+          window.location.href = "index.html";
+          return;
+        }
+
+        const bookImage = document.getElementById("bookImage").files[0]; // ✅ Get uploaded image
+
+        // ✅ Convert image to Base64 if an image is selected
+        let imageBase64 = "";
+        if (bookImage) {
+          const reader = new FileReader();
+          reader.readAsDataURL(bookImage);
+          reader.onload = () => {
+            imageBase64 = reader.result;
+            sendBookToServer(imageBase64);
+          };
+        } else {
+          sendBookToServer("");
+        }
+      }
+
+      // ✅ Function to send book details to the backend
+      async function sendBookToServer(imageBase64) {
+        const newBook = {
+          title: document.getElementById("bookTitle").value.trim(),
+          author: document.getElementById("bookAuthor").value.trim(),
+          genre: document.getElementById("bookGenre").value,
+          condition: document.getElementById("bookCondition").value,
+          description: document.getElementById("bookDescription").value,
+          ownerId:
+            sessionStorage.getItem("userId") || localStorage.getItem("userId"),
+          image: imageBase64, // ✅ Attach Base64 image to book object
+        };
+
+        if (!newBook.title || !newBook.genre || !newBook.condition) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:8080/books/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newBook),
+          });
+
+          const result = await response.text();
+          alert(result);
+
+          if (response.ok) {
+            hideForm();
+            loadInventory(); // Reload books
+          }
+        } catch (error) {
+          console.error("Error adding book:", error);
+          alert("Failed to add book. Please try again.");
+        }
+      }
+
+      async function editBook(bookId) {
+        try {
+          console.log(`Fetching book details for ID: ${bookId}`);
+
+          const response = await fetch(`http://localhost:8080/books/${bookId}`);
+          if (!response.ok) throw new Error("Book details not found.");
+          const book = await response.json();
+
+          // ✅ Fill form with book details
+          document.getElementById("bookTitle").value = book.title;
+          document.getElementById("bookAuthor").value = book.author;
+          document.getElementById("bookGenre").value = book.genre;
+          document.getElementById("bookCondition").value = book.condition;
+          document.getElementById("bookDescription").value = book.description;
+
+          // ✅ Show current book image
+          const imagePreview = document.getElementById("bookImagePreview");
+          if (book.image && book.image.startsWith("data:image")) {
+            imagePreview.src = book.image;
+          } else {
+            imagePreview.src = "https://via.placeholder.com/150"; // Default image
+          }
+
+          // ✅ Listen for new image selection
+          const bookImageInput = document.getElementById("bookImage");
+          bookImageInput.value = ""; // Clear previous input
+          bookImageInput.onchange = function () {
+            const file = bookImageInput.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = function () {
+                imagePreview.src = reader.result; // Show new image preview
+              };
+            }
+          };
+
+          // ✅ Change save button to update book
+          const saveButton = document.querySelector("#addEditForm button");
+          saveButton.setAttribute("onclick", `updateBook(${bookId})`);
+
+          showAddForm(true, book);
+        } catch (error) {
+          console.error("Error fetching book for edit:", error);
+          alert("Book details not found.");
+        }
+      }
+
+      // ✅ Update Book
+      async function updateBook(bookId) {
+        console.log("Updating book...");
+
+        const ownerId =
+          sessionStorage.getItem("userId") || localStorage.getItem("userId");
+        if (!ownerId || ownerId === "0") {
+          alert("User not logged in! Redirecting to login...");
+          window.location.href = "index.html";
+          return;
+        }
+
+        const bookImageInput = document.getElementById("bookImage").files[0];
+        let imageBase64 = document.getElementById("bookImagePreview").src; // ✅ Default to existing image
+
+        if (bookImageInput) {
+          const reader = new FileReader();
+          reader.readAsDataURL(bookImageInput);
+          reader.onload = async function () {
+            imageBase64 = reader.result;
+            await sendUpdatedBookToServer(bookId, imageBase64);
+          };
+        } else {
+          await sendUpdatedBookToServer(bookId, imageBase64);
+        }
+      }
+
+      // ✅ Function to send the updated book data to the backend
+      async function sendUpdatedBookToServer(bookId, imageBase64) {
+        const updatedBook = {
+          title: document.getElementById("bookTitle").value.trim(),
+          author: document.getElementById("bookAuthor").value.trim(),
+          genre: document.getElementById("bookGenre").value,
+          condition: document.getElementById("bookCondition").value,
+          description: document.getElementById("bookDescription").value,
+          ownerId:
+            sessionStorage.getItem("userId") || localStorage.getItem("userId"),
+          image: imageBase64, // ✅ Ensure image is sent
+        };
+
+        if (
+          !updatedBook.title ||
+          !updatedBook.genre ||
+          !updatedBook.condition
+        ) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:8080/books/edit/${bookId}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(updatedBook),
+            }
+          );
+
+          const result = await response.text();
+          alert(result);
+
+          if (response.ok) {
+            hideForm();
+            loadInventory(); // Reload books
+          }
+        } catch (error) {
+          console.error("Error updating book:", error);
+          alert("Failed to update book. Please try again.");
+        }
+      }
+
+      // ✅ Delete Book
+      async function deleteBook(bookId) {
+        if (!confirm("Are you sure you want to delete this book?")) {
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:8080/books/delete/${bookId}`,
+            {
+              method: "DELETE",
+            }
+          );
+
+          const result = await response.text();
+          alert(result);
+          loadInventory(); // Reload after delete
+        } catch (error) {
+          console.error("Error deleting book:", error);
+          alert("Failed to delete book.");
+        }
+      }
+
+      // ✅ Run this when page loads
+      document.addEventListener("DOMContentLoaded", loadInventory);
+    </script>
+  </body>
+</html>
