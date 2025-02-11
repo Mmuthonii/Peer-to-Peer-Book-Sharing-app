@@ -3,24 +3,36 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f5f5f0;
     color: #4a4a3d;
 }
 
-/* Header */
+
+
 header {
     background-color: #9cab85;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    height: 60px;
+    padding: 0 2rem;
+    position: relative;
 }
 
-header h1 {
+header .logo {
     font-size: 1.5rem;
-    font-style: italic;
+    font-weight: bold;
     color: #4a4a3d;
 }
+
+.page-title {
+    text-align: left;
+    margin: 5rem 0 5rem 13rem; /* Moves title left to align with books */
+    width: 100%;
+    font-size: 3.2rem; /* Adjust the size */
+    margin-left: 2rem;
+}
+
 
 nav {
     display: flex;
@@ -46,16 +58,18 @@ nav a.active {
 }
 
 .icon {
-    width: 24px;
+    width: 24px;  /* Ensure the icons are visible */
     height: 24px;
+    fill: white;  /* Make them white to match the header */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
-/* Profile Page Title */
-.profile-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-top: 2rem;
+
+.icon:hover {
+    transform: scale(1.1);  /* Slightly enlarges on hover */
 }
+
 
 /* Profile Header */
 .profile-header {
@@ -63,7 +77,18 @@ nav a.active {
     align-items: center;
     padding: 2rem;
     gap: 2rem; /* Space between avatar and username */
+    margin-left: 0; /* Keep header aligned under Profile */
 }
+
+
+
+/* Ensure everything moves to the right under "Profile" */
+.profile-container {
+    width: 70%;  /* Keep a reasonable width */
+    margin-left: 10%; /* Shift everything to the right */
+    margin-top: 2rem; /* Adds space below the header */
+}
+
 
 /* Brown Profile Avatar */
 .profile-avatar {
@@ -81,6 +106,7 @@ nav a.active {
 
 .profile-info h2 {
     margin: 0;
+    
 }
 
 .edit-profile {
@@ -91,16 +117,22 @@ nav a.active {
 /* Profile Details */
 .profile-details {
     padding: 1rem 2rem;
+    margin-left: 0;
 }
+
+
 
 .profile-details hr {
     margin: 0.5rem 0;
 }
 
 /* Book Ratings Section */
-.book-ratings {
+.borrowed-books {
     padding: 2rem;
+    margin-left: 0;
 }
+
+
 
 .book-ratings hr {
     margin: 0.5rem 0;
@@ -109,10 +141,11 @@ nav a.active {
 /* Book Grid */
 .book-grid {
     display: flex;
-    gap: 1.5rem;
+    gap: 3rem;
     justify-content: flex-start;
     padding: 1rem 0;
 }
+
 
 .book-placeholder {
     width: 100px;
@@ -125,4 +158,61 @@ nav a.active {
 .rating {
     font-size: 1rem;
     color: #b48a64;
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Style dropdown items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
+}
+
+.edit-profile a {
+    text-decoration: none;  /* Removes underline */
+    color: #888;            /* Keeps the original text color */
+    font-size: 0.9rem;       /* Matches original size */
+}
+
+.edit-profile a:hover {
+    text-decoration: underline; /* Add underline on hover for better UX */
 }

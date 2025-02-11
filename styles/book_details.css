@@ -1,56 +1,120 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+html {
+    overflow-y: scroll; /* Ensures scrollbar is always present */
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f0;
     color: #4a4a3d;
 }
 
-/* Header */
 header {
     background-color: #9cab85;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    height: 60px; /* Set a fixed height */
+    padding: 0 2rem; /* Increase padding */
+
+    position: relative;
 }
 
-header h1 {
+header .logo {
     font-size: 1.5rem;
-    font-style: italic;
+    font-weight: bold;
     color: #4a4a3d;
 }
 
-nav {
+nav ul {
+    list-style: none;
     display: flex;
-    gap: 15px; /* Matches the second code */
+    gap: 15px;
 }
 
 nav a {
     text-decoration: none;
-    color: white;
+    color: #ffffff;
     font-size: 1rem;
     margin-right: 0.7rem;
-    padding: 0 0.5rem; /* Adds spacing inside each tab */
 }
-
 
 nav a.active {
     font-weight: bold;
     text-decoration: underline;
 }
 
-/* Icons */
 .icon-bar {
     display: flex;
-    align-items: center;
     gap: 1rem;
+    align-items: center;
+    
+ 
 }
 
 .icon {
     width: 24px;
     height: 24px;
+    fill: white;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+.search-popup {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-popup input {
+    padding: 5px;
+    font-size: 1rem;
+    width: 200px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 60px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #4a4a3d;
+}
+
+.dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+
+.page-title {
+    text-align: left;
+    margin: 0rem 0 5rem 3rem; /* Moves title left to align with books */
+    width: 100%;
+    font-size: 2rem; /* Adjust the size */
 }
 
 /* Book Details */
@@ -58,7 +122,8 @@ nav a.active {
     display: flex;
     align-items: flex-start;
     padding: 2rem;
-    gap: 3rem;
+    gap: 5rem;
+    margin-left: 1rem;
 }
 
 /* Book Image Placeholder */
@@ -72,6 +137,7 @@ nav a.active {
 /* Book Info */
 .book-info {
     flex: 1;
+    
 }
 
 .book-info h2 {
@@ -86,6 +152,7 @@ nav a.active {
 /* Loaned By Section */
 .loaned-by {
     padding: 2rem;
+    margin-left: 1rem;
 }
 
 .loaned-by hr {
@@ -148,4 +215,57 @@ nav a.active {
 
 .message-button:hover {
     background-color: #a07d5a;
+}
+
+/* Profile Dropdown Container */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Style dropdown items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
+}
+
+main {
+    margin-top: 5rem; /* Adjust this value to move content further down */
+    margin-left: 10rem;
 }

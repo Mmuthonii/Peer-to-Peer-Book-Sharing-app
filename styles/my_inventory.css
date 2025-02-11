@@ -71,7 +71,11 @@ nav a.active {
     height: 24px;
     fill: white;
     cursor: pointer;
-   
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon:hover {
+transform: scale(1.1);
 }
 
 /* Table Styling */
@@ -152,4 +156,52 @@ button.remove-book {
 button.update-icon {
     font-size: 2.5rem; /* Make it larger than + and - */
     color: rgb(83, 52, 33); /* Keep it brown */
+}
+
+/* Profile Dropdown Container */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Style dropdown items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
 }
