@@ -134,16 +134,13 @@ nav a.active {
 
 
 
-.book-ratings hr {
-    margin: 0.5rem 0;
-}
-
 /* Book Grid */
 .book-grid {
     display: flex;
     gap: 3rem;
     justify-content: flex-start;
     padding: 1rem 0;
+    size: 10rem;
 }
 
 
@@ -152,6 +149,15 @@ nav a.active {
     height: 140px;
     background-color: #ececec;
     border-radius: 5px;
+}
+
+.borrowed-books{
+    padding-bottom: 7%;
+}
+
+.borrowed-books h3{
+    padding-bottom: 1%;
+    font-size: x-large;
 }
 
 /* Book Ratings */
