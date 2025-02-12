@@ -3,9 +3,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f5f5f0;
     color: #4a4a3d;
 }
+
+
 
 /* Header */
 header {
@@ -16,10 +18,21 @@ header {
     padding: 1rem 2rem;
 }
 
-header h1 {
+
+
+header .logo {
     font-size: 1.5rem;
-    font-style: italic;
+    font-weight: bold;
     color: #4a4a3d;
+}
+
+
+
+.page-title {
+    text-align: left;
+    margin: 5rem 0 5rem 13rem; /* Moves title left to align with books */
+    width: 100%;
+    font-size: 3rem; /* Adjust the size */
 }
 
 nav {
@@ -46,9 +59,17 @@ nav a.active {
 }
 
 .icon {
-    width: 24px;
+    width: 24px;  /* Ensure the icons are visible */
     height: 24px;
+    fill: white;  /* Make them white to match the header */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
+
+.icon:hover {
+    transform: scale(1.1);  /* Slightly enlarges on hover */
+}
+
 
 /* Settings Title */
 .settings-title {
@@ -63,6 +84,7 @@ nav a.active {
     align-items: flex-start;
     padding: 2rem;
     gap: 3rem;
+    margin: 5rem 0 5rem 11rem; /* Moves title left to align with books */
 }
 
 /* Profile Section */
@@ -98,6 +120,7 @@ nav a.active {
 .settings-form {
     flex: 1;
     max-width: 400px;
+    margin: -2rem 0 0rem 5rem; /* Moves title left to align with books */
 }
 
 .settings-form label {
@@ -133,4 +156,52 @@ nav a.active {
 
 .save-button:hover {
     background-color: #8aa17e;
+}
+
+/* Profile Dropdown Container */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Style dropdown items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
 }

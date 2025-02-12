@@ -1,3 +1,4 @@
+/* General Styles */
 html {
     overflow-y: scroll; /* Ensures scrollbar is always present */
 }
@@ -14,31 +15,60 @@ body {
     color: #4a4a3d;
 }
 
-/* Fix Header Alignment */
 header {
     background-color: #9cab85;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Distributes logo, nav, and icons */
     align-items: center;
-    height: 60px; /* Set a fixed height */
-    padding: 0 2rem; /* Increase padding */
-
+    height: 60px;
+    padding: 0 2rem;
     position: relative;
 }
-
-nav a {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 1rem;
-    margin-right: 0.7rem;
-}
-
 
 header .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #4a4a3d;
 }
+
+nav {
+    flex: 1; /* Takes up available space */
+    display: flex;
+    justify-content: center; /* Centers the nav links */
+    gap: 1.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.icon-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+    
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.icon:hover {
+transform: scale(1.1);
+}
+
 
 /* Move "Requests" title to the left */
 .page-title h2 {
@@ -56,11 +86,6 @@ header h1 {
 }
 
 
-
-nav a.active {
-    font-weight: bold;
-    text-decoration: underline;
-}
 
 /* Section Titles */
 h2 {
@@ -80,17 +105,19 @@ h3 {
     margin-bottom: 1.5rem; /* Adds space below the title */
 }
 
-/* Increase space between tables */
-table {
-    width: 80%;
-    margin: 3rem auto 3rem 13rem; /* Increased bottom margin */
-    border-collapse: collapse;
-    text-align: left;
-}
+
 
 th, td {
     padding: 1rem;
     border-bottom: 1px solid #ccc;
+    text-align: left; /* Aligns all text to the left */
+}
+
+/* Ensure all tables have the same column widths */
+table {
+    width: 80%;
+    margin: 3rem auto 3rem 13rem; /* Keep it aligned */
+    table-layout: fixed; /* Ensures equal column widths */
 }
 
 th {
@@ -126,6 +153,7 @@ th {
 }
 
 /* Status Styling */
+/* Add spacing between Accepted/Rejected and Pickup/Drop-off texts */
 .status {
     display: inline-block;
     padding: 5px 10px;
@@ -134,14 +162,18 @@ th {
     font-size: 0.9rem;
     font-style: italic;
     border-radius: 5px;
+    margin-bottom: 8px; /* Space below Accepted/Rejected */
 }
 
+/* Add spacing between Pick-up and Drop-off lines */
 .pickup, .dropoff {
     display: block;
     font-size: 0.9rem;
     color: #4a4a3d;
     font-weight: bold;
+    margin-top: 5px; /* Space between Pick-up and Drop-off */
 }
+
 
 /* Action Buttons */
 .accept-btn {
@@ -170,4 +202,52 @@ th {
 
 .reject-btn:hover {
     background-color: #b25050;
+}
+
+/* Profile Dropdown Container */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Style dropdown items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
 }

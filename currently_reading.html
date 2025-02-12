@@ -28,25 +28,36 @@
           ></path>
         </svg>
         <!-- Messaging Icon -->
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
-          ></path>
-        </svg>
-        <!-- Profile Icon -->
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
-          ></path>
-        </svg>
+        <a href="messages.html">
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+            ></path>
+          </svg>
+        </a>
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown">
+          <a href="#" class="profile-icon">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+              ></path>
+            </svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile</a>
+            <a href="settings.html">Account Settings</a>
+            <a href="logout.html">Logout</a>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -59,8 +70,7 @@
           <tr>
             <th>Borrowed Books</th>
             <th>From</th>
-            <th>Duration</th>
-            <th>Rate</th>
+            <th>Return Book</th>
           </tr>
         </thead>
         <tbody>
@@ -73,8 +83,9 @@
               <div class="user-placeholder"></div>
               <span>Name</span>
             </td>
-            <td>31.01.2025 - 15.02.2025</td>
-            <td>⭐ ★ ★ ★ ★</td>
+            <td>
+              <button class="returned-btn">Returned</button>
+            </td>
           </tr>
           <tr>
             <td>
@@ -85,8 +96,9 @@
               <div class="user-placeholder"></div>
               <span>Name</span>
             </td>
-            <td></td>
-            <td>⭐ ★ ★ ★ ★</td>
+            <td>
+              <button class="returned-btn">Returned</button>
+            </td>
           </tr>
           <tr>
             <td>
@@ -97,8 +109,9 @@
               <div class="user-placeholder"></div>
               <span>Name</span>
             </td>
-            <td></td>
-            <td>⭐ ★ ★ ★ ★</td>
+            <td>
+              <button class="returned-btn">Returned</button>
+            </td>
           </tr>
         </tbody>
       </table>

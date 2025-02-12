@@ -1,24 +1,36 @@
+html {
+    overflow-y: scroll; /* Ensures scrollbar is always present */
+}
+
+
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f5f5f0;
     color: #4a4a3d;
 }
 
-/* Header */
+main {
+    margin-top: 8rem; /* Adjust this value to move content further down */
+}
+
+
 header {
     background-color: #9cab85;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    height: 60px; /* Set a fixed height */
+    padding: 0 2rem; /* Increase padding */
+
+    position: relative;
 }
 
-header h1 {
+header .logo {
     font-size: 1.5rem;
-    font-style: italic;
+    font-weight: bold;
     color: #4a4a3d;
 }
 
@@ -50,9 +62,14 @@ nav a.active {
     height: 24px;
     fill: white;
     cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
-/* Messages Layout */
+.icon:hover {
+    transform: scale(1.1);
+}
+
+/* Messages Page Layout */
 .messages-container {
     display: flex;
     width: 80%;
@@ -60,78 +77,164 @@ nav a.active {
     gap: 2rem;
 }
 
-.user-list {
+/* Sidebar */
+.sidebar {
     width: 30%;
-    border-right: 1px solid #ccc;
-    padding-right: 1rem;
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* User Search */
+#search-user {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+
+/* User List */
+#user-list {
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .user {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
+    padding: 10px;
+    cursor: pointer;
     border-bottom: 1px solid #ddd;
 }
 
+.user:hover {
+    background: #e0e0e0;
+}
+
 .user-avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #ececec;
+    width: 40px;
+    height: 40px;
+    background-color: #b48a64;
     border-radius: 50%;
 }
 
-.notification {
-    background-color: #d4a373;
-    color: white;
-    font-size: 0.9rem;
-    padding: 5px 10px;
-    border-radius: 50%;
-}
-
-.chat-preview {
-    background-color: #9cab85;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    flex-grow: 1;
-}
-
-.chat-box {
+/* Chat Area */
+.chat-area {
     width: 70%;
-    background-color: #f8f8f8;
-    border-radius: 10px;
+    background: white;
     padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+/* Chat Header */
 .chat-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    border-bottom: 1px solid #ddd;
     padding-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
 }
 
+/* Chat Messages */
 .chat-messages {
-    padding: 1rem 0;
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 300px;
 }
 
 .message {
-    background-color: #9cab85;
-    padding: 10px;
-    border-radius: 10px;
+    background: #9cab85;
     color: white;
-    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    max-width: 80%;
 }
 
+.sent {
+    align-self: flex-end;
+    background: #6c8b47;
+}
+
+/* Chat Input */
 .chat-input {
-    border-top: 1px solid #ddd;
+    display: flex;
+    gap: 1rem;
     padding-top: 1rem;
+    border-top: 1px solid #ddd;
 }
 
 .chat-input input {
-    width: 100%;
-    padding: 10px;
-    border: none;
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+#send-btn {
+    background: #9cab85;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Dropdown Items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
 }
