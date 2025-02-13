@@ -1,0 +1,249 @@
+html {
+    overflow-y: scroll; /* Ensures scrollbar is always present */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f0;
+    color: #4a4a3d;
+}
+
+header {
+    background-color: #9cab85;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px; /* Set a fixed height */
+    padding: 0 2rem; /* Increase padding */
+
+    position: relative;
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a4a3d;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1rem;
+    margin-right: 0.7rem;
+}
+
+nav a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.icon-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    
+ 
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+.search-popup {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 100px;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-popup input {
+    padding: 5px;
+    font-size: 1rem;
+    width: 200px;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 60px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #4a4a3d;
+}
+
+.dropdown a:hover {
+    background-color: #f0f0f0;
+}
+
+
+.page-title {
+    text-align: left;
+    margin: 5rem 0 5rem 13rem; /* Moves title left to align with books */
+    width: 100%;
+    font-size: 2rem; /* Adjust the size */
+}
+
+/* Book Grid Styles */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(5,0.5fr); /* 5 columns */
+    gap: 0rem; /* Spacing between books */
+    padding: 0 10rem;
+    justify-items:center;
+    margin-bottom: 10rem; /* Extra space above the footer */
+}
+
+.book-item {
+    text-align: center; /* Center book titles */
+}
+
+.book-placeholder {
+    width: 200px; /* Adjusted width for better fit */
+    height: 300px; /* Adjusted height for better fit */
+    background-color: #ececec;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-title {
+    margin-top: 1rem;
+    margin-bottom: 5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Browse More Books Button */
+.browse-more {
+    display: block;
+    margin: 2rem auto; /* Center the button */
+    padding: 0.5rem 1rem;
+    background-color: #8aa17e;
+    color: rgb(105, 67, 39);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    width: 200px; /* Fixed width for the button */
+}
+
+.browse-more:hover {
+    background-color: #7a9a6e; /* Darker shade on hover */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* Center pagination */
+    margin: 2rem 0; /* Space above and below */
+    gap: 10px; /* Space between numbers */
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #4a4a3d;
+    background-color: #ddd;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #9cab85; /* Change color on hover */
+    color: white;
+}
+
+.pagination .active {
+    background-color: #6c9e6b;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* Footer */
+footer {
+    background-color: #eee;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+
+/* Profile Dropdown Container */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* The dropdown menu (hidden by default) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 150px;
+    z-index: 10;
+}
+
+/* Style dropdown items */
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #4a4a3d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Hover effect */
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Show dropdown when hovering over profile icon */
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Profile Icon Styling */
+.profile-icon .icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.profile-icon .icon:hover {
+    transform: scale(1.1);
+}

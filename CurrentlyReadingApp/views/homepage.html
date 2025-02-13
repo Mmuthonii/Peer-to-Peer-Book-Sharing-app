@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OneMoreChapter - Homepage</title>
+    <style>
+      html {
+        overflow-y: scroll; /* Ensures scrollbar is always present */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f0;
+        color: #4a4a3d;
+      }
+
+      header {
+        background-color: #9cab85;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px; /* Set a fixed height */
+        padding: 0 2rem; /* Increase padding */
+
+        position: relative;
+      }
+
+      header .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4a4a3d;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1rem;
+        margin-right: 0.7rem;
+      }
+
+      nav a.active {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .icon-bar {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        fill: white;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .icon:hover {
+        transform: scale(1.1);
+      }
+
+      .search-popup {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 100px;
+        background-color: #ffffff;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-popup input {
+        padding: 5px;
+        font-size: 1rem;
+        width: 200px;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        top: 50px;
+        right: 60px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .dropdown a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #4a4a3d;
+      }
+
+      .dropdown a:hover {
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .shelves-and-search {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 30px;
+      }
+
+      .shelves {
+        flex: 1;
+      }
+
+      .shelves img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+      }
+
+      .search-bar {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+      }
+
+      .search-bar button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #9cab85;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .recommended {
+        width: 100%;
+        max-width: 1200px;
+        background-color: #c3c6a8;
+        padding: 40px;
+        border-radius: 10px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .recommended h2 {
+        font-size: 1.8rem;
+        font-weight: normal; /* Remove bold */
+        margin-bottom: 30px;
+        text-align: left; /* Align to the left */
+        width: 100%;
+        padding-left: 3px; /* Align with first book */
+      }
+
+      .recommended-reads {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .book-placeholder {
+        width: 100%;
+        padding-bottom: 150%; /* Aspect ratio for a responsive square */
+        background-color: #e0e0d1;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .book-placeholder span {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        font-size: 0.9rem;
+        color: #4a4a3d;
+      }
+
+      footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #7a7a7a;
+      }
+
+      /* Profile Dropdown Container */
+      .profile-dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      /* The dropdown menu (hidden by default) */
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #ffffff;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        min-width: 150px;
+        z-index: 10;
+      }
+
+      /* Style dropdown items */
+      .dropdown-menu a {
+        display: block;
+        padding: 10px;
+        color: #4a4a3d;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      /* Hover effect */
+      .dropdown-menu a:hover {
+        background-color: #f0f0f0;
+      }
+
+      /* Show dropdown when hovering over profile icon */
+      .profile-dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      /* Profile Icon Styling */
+      .profile-icon .icon {
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .profile-icon .icon:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">OneMoreChapter</div>
+      <nav>
+        <ul>
+          <a href="homepage.html" class="active">Home</a>
+          <a href="books_onLoan.html">Books on Loan</a>
+          <li><a href="my_inventory.html">My Inventory</a></li>
+          <li><a href="currently_reading.html">Currently Reading</a></li>
+          <li><a href="requests.html">Requests</a></li>
+        </ul>
+      </nav>
+      <div class="icon-bar">
+        <!-- Search Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          onclick="toggleSearchPopup()"
+        >
+          <path
+            d="M10 2a8 8 0 015.293 13.707l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+          ></path>
+        </svg>
+
+        <!-- Messaging Icon -->
+        <a href="messages.html">
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+            ></path>
+          </svg>
+        </a>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown">
+          <a href="#" class="profile-icon">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+              ></path>
+            </svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile</a>
+            <a href="settings.html">Settings</a>
+            <a href="logout.html">Logout</a>
+          </div>
+        </div>
+      </div>
+      <div class="search-popup">
+        <input type="text" placeholder="Search..." />
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Shelves and Search Bar Section -->
+      <div class="shelves-and-search">
+        <div class="shelves">
+          <img src="pictures/bookshelf.png" alt="Bookshelf" />
+        </div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search for books..." />
+          <button>Search</button>
+        </div>
+      </div>
+
+      <!-- Recommended Reads Section -->
+      <div class="recommended">
+        <h2>Recommended Reads:</h2>
+        <div class="recommended-reads">
+          <div class="book-placeholder"><span>Book Title 1</span></div>
+          <div class="book-placeholder"><span>Book Title 2</span></div>
+          <div class="book-placeholder"><span>Book Title 3</span></div>
+          <div class="book-placeholder"><span>Book Title 4</span></div>
+          <div class="book-placeholder"><span>Book Title 5</span></div>
+        </div>
+      </div>
+    </div>
+
+    <footer></footer>
+
+    <script>
+      function toggleSearchPopup() {
+        const popup = document.querySelector(".search-popup");
+        popup.style.display =
+          popup.style.display === "block" ? "none" : "block";
+      }
+
+      function toggleDropdown() {
+        const dropdown = document.querySelector(".dropdown");
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+      }
+    </script>
+  </body>
+</html>

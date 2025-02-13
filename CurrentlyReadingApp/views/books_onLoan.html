@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books on Loan</title>
+    <link rel="stylesheet" href="styles/books_onLoan.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">OneMoreChapter</div>
+      <nav>
+        <ul>
+          <a href="homepage.html">Home</a>
+          <a href="books_onLoan.html" class="active">Books on Loan</a>
+          <li><a href="my_inventory.html">My Inventory</a></li>
+          <li><a href="currently_reading.html">Currently Reading</a></li>
+          <li><a href="requests.html">Requests</a></li>
+        </ul>
+      </nav>
+      <div class="icon-bar">
+        <!-- Search Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M10 2a8 8 0 015.293 13.707l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+          ></path>
+        </svg>
+        <!-- Messaging Icon -->
+        <a href="messages.html">
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+            ></path>
+          </svg>
+        </a>
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown">
+          <a href="#" class="profile-icon">
+            <svg
+              class="icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+              ></path>
+            </svg>
+          </a>
+          <div class="dropdown-menu">
+            <a href="profile.html">Profile</a>
+            <a href="settings.html">Settings</a>
+            <a href="logout.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="page-title">
+        <h2>Books on Loan</h2>
+      </div>
+      <section class="book-grid" id="bookContainer">
+        <!-- Books will be dynamically added here -->
+      </section>
+
+      <div class="pagination">
+        <a href="#" class="prev" onclick="prevPage()">&laquo;</a>
+        <a href="#" class="page-number active" onclick="changePage(1)">1</a>
+        <a href="#" class="page-number" onclick="changePage(2)">2</a>
+        <a href="#" class="page-number" onclick="changePage(3)">3</a>
+        <a href="#" class="next" onclick="nextPage()">&raquo;</a>
+      </div>
+    </main>
+  </body>
+
+  <script>
+    // Simulated Book Data (Only 45 books)
+    const books = [
+      { title: "Book Title 1" },
+      { title: "Book Title 2" },
+      { title: "Book Title 3" },
+      { title: "Book Title 4" },
+      { title: "Book Title 5" },
+      { title: "Book Title 6" },
+      { title: "Book Title 7" },
+      { title: "Book Title 8" },
+      { title: "Book Title 9" },
+      { title: "Book Title 10" },
+      { title: "Book Title 11" },
+      { title: "Book Title 12" },
+      { title: "Book Title 13" },
+      { title: "Book Title 14" },
+      { title: "Book Title 15" },
+      { title: "Book Title 16" },
+      { title: "Book Title 17" },
+      { title: "Book Title 18" },
+      { title: "Book Title 19" },
+      { title: "Book Title 20" },
+      { title: "Book Title 21" },
+      { title: "Book Title 22" },
+      { title: "Book Title 23" },
+      { title: "Book Title 24" },
+      { title: "Book Title 25" },
+      { title: "Book Title 26" },
+      { title: "Book Title 27" },
+      { title: "Book Title 28" },
+      { title: "Book Title 29" },
+      { title: "Book Title 30" },
+      { title: "Book Title 31" },
+      { title: "Book Title 32" },
+      { title: "Book Title 33" },
+      { title: "Book Title 34" },
+      { title: "Book Title 35" },
+      { title: "Book Title 36" },
+      { title: "Book Title 37" },
+      { title: "Book Title 38" },
+      { title: "Book Title 39" },
+      { title: "Book Title 40" },
+      { title: "Book Title 41" },
+      { title: "Book Title 42" },
+      { title: "Book Title 43" },
+      { title: "Book Title 44" },
+      { title: "Book Title 45" },
+    ];
+
+    const booksPerPage = 15;
+    let currentPage = 1;
+    const totalPages = 3; // Only 3 pages
+
+    function displayBooks(page) {
+      const bookContainer = document.getElementById("bookContainer");
+      bookContainer.innerHTML = ""; // Clear previous books
+
+      const startIndex = (page - 1) * booksPerPage;
+      const endIndex = startIndex + booksPerPage;
+      const booksToShow = books.slice(startIndex, endIndex);
+
+      booksToShow.forEach((book) => {
+        const bookItem = document.createElement("div");
+        bookItem.classList.add("book-item");
+        bookItem.innerHTML = `
+          <div class="book-placeholder"></div>
+          <p class="book-title">${book.title}</p>
+        `;
+        bookContainer.appendChild(bookItem);
+      });
+
+      // Update active page
+      document.querySelectorAll(".page-number").forEach((el) => {
+        el.classList.remove("active");
+      });
+
+      document
+        .querySelector(`.pagination a:nth-child(${page + 1})`)
+        .classList.add("active");
+
+      currentPage = page;
+    }
+
+    function changePage(page) {
+      if (page >= 1 && page <= totalPages) {
+        displayBooks(page);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        changePage(currentPage - 1);
+      }
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) {
+        changePage(currentPage + 1);
+      }
+    }
+
+    // Load first page on start
+    document.addEventListener("DOMContentLoaded", () => displayBooks(1));
+  </script>
+</html>
