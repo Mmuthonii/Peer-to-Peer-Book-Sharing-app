@@ -4,14 +4,20 @@ import com.booksharing.models.User;
 import com.booksharing.utils.JsonStorage;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
+@Service
 public class UserService {
-    private final JsonStorage<User> jsonStorage = new JsonStorage<>("users.json");
+    private final JsonStorage<User> jsonStorage;
     private final Type userListType = new TypeToken<List<User>>() {}.getType();
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public UserService(JsonStorage<User> jsonStorage) {
+        this.jsonStorage = jsonStorage;
+    }
 
     public List<User> getUsers() {
         return jsonStorage.loadData(userListType);
@@ -38,4 +44,3 @@ public class UserService {
                 .anyMatch(user -> passwordEncoder.matches(rawPassword, user.getPassword())); // Compare hashed password
     }
 }
-

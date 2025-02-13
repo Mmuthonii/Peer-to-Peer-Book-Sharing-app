@@ -1,9 +1,4 @@
-html {
-    overflow-y: scroll; /* Ensures scrollbar is always present */
-}
-
-
-/* General Styles */
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -12,26 +7,24 @@ body {
     color: #4a4a3d;
 }
 
-main {
-    margin-top: 8rem; /* Adjust this value to move content further down */
-}
-
-
+/* Header Styling */
 header {
     background-color: #9cab85;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px; /* Set a fixed height */
-    padding: 0 2rem; /* Increase padding */
-
-    position: relative;
+    height: 60px;
+    padding: 0 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
 header .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #4a4a3d;
+    color: white;
 }
 
 nav {
@@ -45,35 +38,11 @@ nav a {
     font-size: 1rem;
 }
 
-nav a.active {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-/* Icons */
-.icon-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.icon {
-    width: 24px;
-    height: 24px;
-    fill: white;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.icon:hover {
-    transform: scale(1.1);
-}
-
 /* Messages Page Layout */
 .messages-container {
     display: flex;
     width: 80%;
-    margin: 2rem auto;
+    margin: 6rem auto 2rem;
     gap: 2rem;
 }
 
@@ -98,7 +67,6 @@ nav a.active {
     border-radius: 5px;
     margin-bottom: 1rem;
 }
-
 
 /* User List */
 #user-list {
@@ -135,15 +103,6 @@ nav a.active {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-/* Chat Header */
-.chat-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #ddd;
 }
 
 /* Chat Messages */
@@ -190,51 +149,4 @@ nav a.active {
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-}
-
-/* Profile Dropdown */
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* Dropdown Menu */
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    overflow: hidden;
-    min-width: 150px;
-    z-index: 10;
-}
-
-/* Dropdown Items */
-.dropdown-menu a {
-    display: block;
-    padding: 10px;
-    color: #4a4a3d;
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-.dropdown-menu a:hover {
-    background-color: #f0f0f0;
-}
-
-/* Show dropdown when hovering over profile icon */
-.profile-dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-/* Profile Icon Styling */
-.profile-icon .icon {
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-}
-
-.profile-icon .icon:hover {
-    transform: scale(1.1);
 }

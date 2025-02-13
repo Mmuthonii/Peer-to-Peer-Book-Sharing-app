@@ -4,307 +4,229 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Messages</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #e5e1da;
-      color: #4a4a3d;
-    }
-
-    header {
-      background-color: #9cab85;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      position: relative;
-    }
-
-    header .logo {
-      font-size: 1.5rem; /* Slightly larger for better readability */
-      font-style: italic;
-      color: #4a4a3d;
-      font-weight: bold;
-    }
-
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-      margin: 0;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: #ffffff;
-      font-size: 1.1rem;
-      font-weight: 500;
-      padding: 5px 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    nav a:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-
-    .icons {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .icons .icon {
-      cursor: pointer;
-      font-size: 1.5rem;
-      color: #ffffff;
-      position: relative;
-    }
-
-
-    .search-popup {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 100px;
-      background-color: #ffffff;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .search-popup input {
-      padding: 5px;
-      font-size: 1rem;
-      width: 200px;
-    }
-
-    .dropdown {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 60px;
-      background-color: #ffffff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .dropdown a {
-      display: block;
-      padding: 10px;
-      text-decoration: none;
-      color: #4a4a3d;
-    }
-
-    .dropdown a:hover {
-      background-color: #f0f0f0;
-    }
-
-
-    /* Messages Layout */
-    .messages-container {
-      display: flex;
-      width: 80%;
-      margin: 2rem auto;
-      gap: 2rem;
-    }
-
-    .user-list {
-      width: 30%;
-      border-right: 1px solid #ccc;
-      padding-right: 1rem;
-    }
-
-    .user {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      border-bottom: 1px solid #ddd;
-      cursor: pointer;
-    }
-
-    .user-avatar {
-      width: 50px;
-      height: 50px;
-      background-color: #ececec;
-      border-radius: 50%;
-    }
-
-    .notification {
-      background-color: #d4a373;
-      color: white;
-      font-size: 0.9rem;
-      padding: 5px 10px;
-      border-radius: 50%;
-    }
-
-    .chat-box {
-      width: 70%;
-      background-color: #f8f8f8;
-      border-radius: 10px;
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .chat-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 1rem;
-    }
-
-    .chat-messages {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 1rem 0;
-    }
-
-    .message {
-      background-color: #9cab85;
-      padding: 10px;
-      border-radius: 10px;
-      color: white;
-      max-width: 70%;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-
-    .chat-input {
-      display: flex;
-      border-top: 1px solid #ddd;
-      padding-top: 1rem;
-    }
-
-    .chat-input input {
-      width: 90%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    .chat-input button {
-      width: 10%;
-      padding: 10px;
-      border: none;
-      background-color: #9cab85;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="messages.css">
 </head>
 <body>
 
 <header>
   <div class="logo">OneMoreChapter</div>
   <nav>
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="loan.html">Books on Loan</a></li>
-      <li><a href="inventory.html">My Inventory</a></li>
-      <li><a href="reading.html">Currently Reading</a></li>
-      <li><a href="requests.html">Requests</a></li>
-    </ul>
+    <a href="home.html">Home</a>
+    <a href="loan.html">Books on Loan</a>
+    <a href="inventory.html">My Inventory</a>
+    <a href="reading.html">Currently Reading</a>
+    <a href="requests.html">Requests</a>
   </nav>
-  <div class="icons">
-    <div class="icon search-icon" onclick="toggleSearchPopup()">🔍</div>
-    <div class="icon messages-icon" onclick="window.location.href='messages.html'">💬</div>
-    <div class="icon profile-icon" onclick="toggleDropdown()">👤</div>
-    <div class="dropdown" id="dropdownMenu">
-      <a href="profile.html">My Profile</a>
-      <a href="#" onclick="logout()">Log Out</a>
-    </div>
-    <div class="language" onclick="toggleLanguage()">EN/DE</div>
-  </div>
-  <div class="search-popup" id="searchPopup">
-    <input type="text" id="navSearchInput" placeholder="Search for books..." onkeydown="handleSearch(event)">
-    <button onclick="searchBooksFromNav()">Search</button>
-  </div>
 </header>
 
-
 <main>
-  <h2>Messages</h2>
   <div class="messages-container">
-    <div class="user-list" id="userList">
-      <!-- User list will be dynamically inserted here -->
+    <!-- Sidebar with user search -->
+    <div class="sidebar">
+      <h2>Messages</h2>
+      <input type="text" id="search-user" placeholder="Search users...">
+      <div id="user-list"></div>
     </div>
-    <div class="chat-box">
+
+    <!-- Chat Window -->
+    <div class="chat-area">
       <div class="chat-header">
         <div class="user-avatar"></div>
-        <p id="chatWith">Select a chat</p>
+        <p id="chatWith">Select a user to start chatting</p>
       </div>
-      <div class="chat-messages" id="chatMessages">
-        <!-- Chat messages will be dynamically inserted here -->
-      </div>
+      <div class="chat-messages" id="chatMessages"></div>
       <div class="chat-input">
-        <input type="text" id="messageInput" placeholder="Message..." onkeydown="handleEnter(event)">
-        <button onclick="sendMessage()">Send</button>
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button id="send-btn">Send</button>
       </div>
     </div>
   </div>
 </main>
 
+<!-- ✅ Your JavaScript Code Starts Here -->
 <script>
-  // Function to handle Enter key press in search input
-  function handleSearch(event) {
+  let stompClient = null;
+  let currentRecipient = null;
+
+  function handleEnter(event) {
     if (event.key === "Enter") {
-      searchBooksFromNav();
+      event.preventDefault();
+      sendMessage();
     }
   }
 
-  // Function to execute book search from the navigation bar
-  function searchBooksFromNav() {
-    const query = document.getElementById("navSearchInput").value.trim();
-    if (!query) {
-      alert("Please enter a search query!");
+  // Ensure DOM elements are assigned after the DOM is ready
+  document.addEventListener("DOMContentLoaded", function () {
+    const chatMessages = document.getElementById("chatMessages");
+    const chatWith = document.getElementById("chatWith");
+    const messageInput = document.getElementById("messageInput");
+    const userList = document.getElementById("user-list");
+
+    if (messageInput) {
+      messageInput.addEventListener("keydown", handleEnter);
+    } else {
+      console.error("❌ messageInput element not found in the DOM.");
+    }
+
+    loadChatList();
+    connect();
+  });
+
+  function connect() {
+    let socket = new SockJS('/chat-websocket');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+      console.log("✅ WebSocket Connected:", frame);
+
+      const loggedInUser = sessionStorage.getItem("username");
+      if (!loggedInUser) {
+        console.error("❌ No logged-in user found in sessionStorage.");
+        return;
+      }
+
+      // ✅ Listen for incoming messages and update chat for both users
+      stompClient.subscribe('/user/queue/messages', function (message) {
+        if (!message.body) {
+          console.error("❌ Received an empty message body.");
+          return;
+        }
+
+        let msg = JSON.parse(message.body);
+        console.log("📩 Received message:", msg);
+
+        // ✅ Ensure both sender & recipient see the message in real-time
+        if (msg.recipient === loggedInUser || msg.sender === loggedInUser) {
+          console.log("✅ Updating chat immediately for both sender & recipient...");
+          displayMessage(msg.sender, msg.content);
+        }
+      });
+    }, function (error) {
+      console.error("❌ WebSocket Connection Failed:", error);
+      setTimeout(connect, 5000); // Retry connection after 5 seconds
+    });
+  }
+
+  function sendMessage() {
+    const messageInput = document.getElementById("messageInput");
+    if (!messageInput) {
+      console.error("❌ Message input field not found.");
       return;
     }
-    window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
+
+    const loggedInUser = sessionStorage.getItem("username");
+    if (!loggedInUser) {
+      console.error("❌ No logged-in user found in sessionStorage.");
+      return;
+    }
+
+    if (!currentRecipient) {
+      console.error("❌ No recipient selected.");
+      return;
+    }
+
+    let message = {
+      sender: loggedInUser,
+      recipient: currentRecipient,
+      content: messageInput.value.trim()
+    };
+
+    if (message.content === "") {
+      console.warn("⚠️ Cannot send an empty message.");
+      return;
+    }
+
+    console.log("📤 Sending message:", message);
+
+    if (stompClient && stompClient.connected) {
+      stompClient.send("/app/chat", {}, JSON.stringify(message));
+
+      // ✅ Instantly add sent message to chat
+      displayMessage(loggedInUser, message.content);
+
+      // ✅ Reload only the chat messages (not the full page)
+      setTimeout(() => {
+        loadChatList();
+        selectUser(currentRecipient);
+      }, 500); // Delay to allow the message to be processed
+    } else {
+      console.error("❌ WebSocket is not connected.");
+    }
+
+    messageInput.value = "";
   }
-  // Function to toggle the search popup visibility
-  function toggleSearchPopup() {
-    const popup = document.querySelector(".search-popup");
-    popup.style.display = popup.style.display === "block" ? "none" : "block";
+
+  // ✅ Function to Display Messages in Chat
+  function displayMessage(sender, content) {
+    const chatMessages = document.getElementById("chatMessages");
+    if (!chatMessages) {
+      console.error("❌ chatMessages container not found.");
+      return;
+    }
+
+    let messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+
+    let senderName = document.createElement("strong");
+    senderName.textContent = sender + ": ";
+    messageDiv.appendChild(senderName);
+
+    let messageText = document.createElement("span");
+    messageText.textContent = content;
+    messageDiv.appendChild(messageText);
+
+    const loggedInUser = sessionStorage.getItem("username");
+    if (sender === loggedInUser) {
+      messageDiv.classList.add("sent");
+    } else {
+      messageDiv.classList.add("received");
+    }
+
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // ✅ Auto-scroll to latest message
   }
 
-  // Function to toggle the dropdown visibility
-  function toggleDropdown() {
-    const dropdown = document.querySelector(".dropdown");
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  function selectUser(user) {
+    currentRecipient = user;
+    document.getElementById("chatWith").textContent = "Chat with " + user;
+    document.getElementById("chatMessages").innerHTML = "";
+
+    const loggedInUser = sessionStorage.getItem("username") || "UnknownUser";
+    fetch(`/chat/history?user1=${encodeURIComponent(loggedInUser)}&user2=${encodeURIComponent(user)}`)
+            .then(response => response.json())
+            .then(messages => {
+              console.log("📜 Loaded chat history:", messages);
+              messages.forEach(msg => displayMessage(msg.sender, msg.content));
+            })
+            .catch(error => console.error("❌ Failed to load chat history:", error));
   }
 
-  // Function to handle language toggling
-  function toggleLanguage() {
-    alert("Language toggled!");
-  }
-  function logout() {
-    console.log("🔴 Logging out...");
+  function loadChatList() {
+    const loggedInUser = sessionStorage.getItem("username");
+    if (!loggedInUser) {
+      console.error("❌ No logged-in user found in sessionStorage.");
+      return;
+    }
 
-    // Clear session and local storage
-    sessionStorage.clear();
-    localStorage.clear();
-
-    console.log("✅ Storage cleared. Redirecting to login page...");
-
-    // Redirect to login page
-    window.location.href = "index.html";
-  }
-
-
-  const ownerId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
-  if (!ownerId) {
-    alert("User not logged in! Redirecting to login...");
-    window.location.href = "index.html";
+    fetch(`/chat/active?username=${encodeURIComponent(loggedInUser)}`)
+            .then(response => response.json())
+            .then(chatUsers => {
+              console.log("👥 Active chats:", chatUsers);
+              const userList = document.getElementById("user-list");
+              if (!userList) {
+                console.error("❌ user-list container not found.");
+                return;
+              }
+              userList.innerHTML = "";
+              chatUsers.forEach(user => {
+                let chatItem = document.createElement("div");
+                chatItem.classList.add("chat-item");
+                chatItem.textContent = user;
+                chatItem.onclick = () => selectUser(user);
+                userList.appendChild(chatItem);
+              });
+            })
+            .catch(error => console.error("❌ Failed to load chat list:", error));
   }
 </script>
 

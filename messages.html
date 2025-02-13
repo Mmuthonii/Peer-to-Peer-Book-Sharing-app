@@ -1,148 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Messages</title>
-    <link rel="stylesheet" href="styles/messages.css" />
-  </head>
-  <body>
-    <header>
-      <div class="logo">OneMoreChapter</div>
-      <nav>
-        <a href="homepage.html">Home</a>
-        <a href="books_onLoan.html">Books on Loan</a>
-        <a href="my_inventory.html">My Inventory</a>
-        <a href="currently_reading.html">Currently Reading</a>
-        <a href="requests.html">Requests</a>
-      </nav>
-      <div class="icon-bar">
-        <!-- Search Icon -->
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Messages</title>
+  <link rel="stylesheet" href="src/main/resources/static/messages.css" />
+</head>
+<body>
+<header>
+  <div class="logo">OneMoreChapter</div>
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="books_onLoan.html">Books on Loan</a>
+    <a href="my_inventory.html">My Inventory</a>
+    <a href="currently_reading.html">Currently Reading</a>
+    <a href="requests.html">Requests</a>
+  </nav>
+  <div class="icon-bar">
+    <!-- Search Icon -->
+    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path
+              d="M10 2a8 8 0 015.293 13.707l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+      ></path>
+    </svg>
+    <!-- Messaging Icon -->
+    <a href="messages.html">
+      <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+                d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+        ></path>
+      </svg>
+    </a>
+    <!-- Profile Dropdown -->
+    <div class="profile-dropdown">
+      <a href="#" class="profile-icon">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path
-            d="M10 2a8 8 0 015.293 13.707l4 4a1 1 0 01-1.414 1.414l-4-4A8 8 0 1110 2zm0 2a6 6 0 100 12 6 6 0 000-12z"
+                  d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
           ></path>
         </svg>
-        <!-- Messaging Icon -->
-        <a href="messages.html">
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
-            ></path>
-          </svg>
-        </a>
-        <!-- Profile Dropdown -->
-        <div class="profile-dropdown">
-          <a href="#" class="profile-icon">
-            <svg
-              class="icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
-              ></path>
-            </svg>
-          </a>
-          <div class="dropdown-menu">
-            <a href="profile.html">Profile</a>
-            <a href="settings.html">Account Settings</a>
-            <a href="logout.html">Logout</a>
-          </div>
-        </div>
+      </a>
+      <div class="dropdown-menu">
+        <a href="profile.html">Profile</a>
+        <a href="settings.html">Account Settings</a>
+        <a href="logout.html">Logout</a>
       </div>
-    </header>
+    </div>
+  </div>
+</header>
 
-    <main>
-      <div class="messages-container">
-        <!-- Left Panel: User Search & Conversations -->
-        <div class="sidebar">
-          <h2>Messages</h2>
-          <input type="text" id="search-user" placeholder="Search users..." />
-          <div id="user-list">
-            <div class="user">
-              <div class="user-avatar"></div>
-              <p>User Name</p>
-            </div>
-            <div class="user">
-              <div class="user-avatar"></div>
-              <p>User Name</p>
-            </div>
-          </div>
-        </div>
+<main>
+  <div class="messages-container">
+    <!-- Left Panel: User Search & Conversations -->
+    <div class="sidebar">
+      <h2>Messages</h2>
+      <input type="text" id="search-user" placeholder="Search users..." />
+      <div id="user-list"></div>
+    </div>
 
-        <!-- Right Panel: Chat Window -->
-        <div class="chat-area">
-          <div class="chat-header">
-            <div class="user-avatar"></div>
-            <p id="chat-username">Select a user to start chatting</p>
-          </div>
-          <div class="chat-messages" id="chat-messages"></div>
-          <div class="chat-input">
-            <input
-              type="text"
-              id="message-input"
-              placeholder="Type a message..."
-            />
-            <button id="send-btn">Send</button>
-          </div>
-        </div>
+    <!-- Right Panel: Chat Window -->
+    <div class="chat-area">
+      <div class="chat-header">
+        <div class="user-avatar"></div>
+        <p id="chat-username">Select a user to start chatting</p>
       </div>
-    </main>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input">
+        <input type="text" id="message-input" placeholder="Type a message..." />
+        <button id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+</main>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const users = ["John Doe", "Jane Smith", "Alice Johnson", "Bob Brown"];
-        const searchInput = document.getElementById("search-user");
-        const userList = document.getElementById("user-list");
-        const chatMessages = document.getElementById("chat-messages");
-        const chatUsername = document.getElementById("chat-username");
-        const messageInput = document.getElementById("message-input");
-        const sendBtn = document.getElementById("send-btn");
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-        // Dynamically show users in the list
-        searchInput.addEventListener("input", function () {
-          const query = this.value.toLowerCase();
-          userList.innerHTML = "";
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let stompClient = null;
+    let currentRecipient = null;
+    const chatMessages = document.getElementById("chat-messages");
+    const chatUsername = document.getElementById("chat-username");
+    const messageInput = document.getElementById("message-input");
+    const sendBtn = document.getElementById("send-btn");
+    const userList = document.getElementById("user-list");
+    const searchInput = document.getElementById("search-user");
 
-          users
-            .filter((user) => user.toLowerCase().includes(query))
-            .forEach((user) => {
-              const userDiv = document.createElement("div");
-              userDiv.classList.add("user");
-              userDiv.innerHTML = `<div class="user-avatar"></div><p>${user}</p>`;
-              userDiv.onclick = function () {
-                selectUser(user);
-              };
-              userList.appendChild(userDiv);
-            });
-        });
+    const users = ["John Doe", "Jane Smith", "Alice Johnson", "Bob Brown"];
 
-        function selectUser(user) {
-          chatUsername.textContent = user;
-          chatMessages.innerHTML = ""; // Clear chat history
-        }
-
-        sendBtn.addEventListener("click", function () {
-          const messageText = messageInput.value.trim();
-          if (messageText !== "") {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", "sent");
-            messageDiv.textContent = messageText;
-            chatMessages.appendChild(messageDiv);
-            messageInput.value = "";
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+    function connect() {
+      let socket = new SockJS('/chat-websocket');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function () {
+        stompClient.subscribe('/topic/messages', function (message) {
+          let msg = JSON.parse(message.body);
+          if (msg.recipient === currentRecipient || msg.sender === currentRecipient) {
+            displayMessage(msg.sender, msg.content);
           }
         });
       });
-    </script>
-  </body>
+    }
+
+    function displayMessage(sender, content) {
+      let messageDiv = document.createElement("div");
+      messageDiv.classList.add("message");
+      if (sender === "You") {
+        messageDiv.classList.add("sent");
+      }
+      messageDiv.textContent = sender + ": " + content;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function selectUser(user) {
+      currentRecipient = user;
+      chatUsername.textContent = "Chat with " + user;
+      chatMessages.innerHTML = "";
+    }
+
+    sendBtn.addEventListener("click", function () {
+      const messageText = messageInput.value.trim();
+      if (messageText !== "" && currentRecipient) {
+        let message = {
+          sender: "You",
+          recipient: currentRecipient,
+          content: messageText
+        };
+        stompClient.send("/app/chat", {}, JSON.stringify(message));
+        displayMessage("You", messageText);
+        messageInput.value = "";
+      }
+    });
+
+    // Populate user list dynamically
+    function populateUserList() {
+      userList.innerHTML = "";
+      users.forEach(user => {
+        const userDiv = document.createElement("div");
+        userDiv.classList.add("user");
+        userDiv.innerHTML = `<div class="user-avatar"></div><p>${user}</p>`;
+        userDiv.onclick = function () {
+          selectUser(user);
+        };
+        userList.appendChild(userDiv);
+      });
+    }
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      userList.innerHTML = "";
+
+      users
+              .filter(user => user.toLowerCase().includes(query))
+              .forEach(user => {
+                const userDiv = document.createElement("div");
+                userDiv.classList.add("user");
+                userDiv.innerHTML = `<div class="user-avatar"></div><p>${user}</p>`;
+                userDiv.onclick = function () {
+                  selectUser(user);
+                };
+                userList.appendChild(userDiv);
+              });
+    });
+
+    populateUserList();
+    connect();
+  });
+</script>
+</body>
 </html>
