@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select Your Genres</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e5e1da;
+        color: #4a4a3d;
+      }
+
+      /* Header */
+      header {
+        background-color: #9cab85;
+        padding: 1rem 2rem;
+      }
+      header h1 {
+        font-size: 1.5rem;
+        font-style: italic;
+        color: #4a4a3d;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+      }
+
+      .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh; /* Adjust height to push content down */
+        text-align: center;
+        transform: scale(1.2);
+      }
+
+      .genres-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        width: 80%;
+        max-width: 600px;
+        margin-top: 20px; /* Adds space below the text */
+        transform: scale(1.2);
+      }
+
+      .genre {
+        background-color: #c3c6a8;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .genre.selected {
+        background-color: #9cab85;
+        color: #ffffff;
+      }
+
+      .genre:hover {
+        background-color: #a1ae8b;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #9cab85;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      button:disabled {
+        background-color: #c3c6a8;
+        cursor: not-allowed;
+      }
+
+      .warning {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>OneMoreChapter</h1>
+    </header>
+    <div class="content-container">
+      <h2>Select Your Genres!</h2>
+      <p>Your favorite genres help us craft personalized book suggestions.</p>
+      <div class="genres-container">
+        <button class="genre">Fiction</button>
+        <button class="genre">Fantasy</button>
+        <button class="genre">Mystery</button>
+        <button class="genre">Romance</button>
+        <button class="genre">Science Fiction</button>
+        <button class="genre">Horror</button>
+        <button class="genre">Non-Fiction</button>
+        <button class="genre">Self Help</button>
+        <button class="genre">Thriller</button>
+      </div>
+      <p class="warning" id="warning"></p>
+      <button id="continueButton" disabled>Continue</button>
+    </div>
+
+    <script>
+      const genres = document.querySelectorAll(".genre");
+      const continueButton = document.getElementById("continueButton");
+      const warning = document.getElementById("warning");
+      let selectedGenres = [];
+
+      genres.forEach((genre) => {
+        genre.addEventListener("click", () => {
+          const genreName = genre.textContent;
+
+          if (selectedGenres.includes(genreName)) {
+            // Deselect genre
+            selectedGenres = selectedGenres.filter((g) => g !== genreName);
+            genre.classList.remove("selected");
+          } else if (selectedGenres.length < 5) {
+            // Select genre
+            selectedGenres.push(genreName);
+            genre.classList.add("selected");
+          }
+
+          // Validate selection
+          if (selectedGenres.length === 5) {
+            warning.textContent = "";
+            continueButton.disabled = false;
+          } else {
+            continueButton.disabled = true;
+            if (selectedGenres.length > 5) {
+              warning.textContent = "You can select up to 5 genres only!";
+            } else {
+              warning.textContent = "";
+            }
+          }
+        });
+      });
+
+      continueButton.addEventListener("click", () => {
+        // Store selected genres in sessionStorage
+        sessionStorage.setItem(
+          "selectedGenres",
+          JSON.stringify(selectedGenres)
+        );
+        window.location.href = "home.html"; // Redirect to home page
+      });
+    </script>
+  </body>
+</html>

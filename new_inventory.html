@@ -50,6 +50,24 @@
         background-color: rgba(255, 255, 255, 0.2);
       }
 
+      .icon-bar {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .icon {
+        width: 24px; /* Adjust the size if needed */
+        height: 24px;
+        cursor: pointer;
+        fill: white; /* Ensures the icon color matches your navbar */
+        transition: opacity 0.3s ease;
+      }
+
+      .icon:hover {
+        opacity: 0.7;
+      }
+
       .icons {
         display: flex;
         align-items: center;
@@ -66,19 +84,23 @@
       .search-popup {
         display: none;
         position: absolute;
-        top: 50px;
-        right: 100px;
+        top: 50px; /* Adjusted positioning */
+        right: 20px; /* Aligns with search icon */
         background-color: #ffffff;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000; /* Ensures it appears above other elements */
       }
 
       .search-popup input {
-        padding: 5px;
+        padding: 8px;
         font-size: 1rem;
         width: 200px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
       }
 
       .dropdown {
@@ -340,14 +362,14 @@
         console.log("✅ Storage cleared. Redirecting to login page...");
 
         // Redirect to login page
-        window.location.href = "index.html";
+        window.location.href = "new_login.html";
       }
 
       const ownerId =
         sessionStorage.getItem("userId") || localStorage.getItem("userId");
       if (!ownerId) {
         alert("User not logged in! Redirecting to login...");
-        window.location.href = "index.html";
+        window.location.href = "new_login.html";
       }
 
       // ✅ Load Books in Inventory (Fetch only books belonging to the logged-in user)
@@ -357,7 +379,7 @@
 
         if (!ownerId) {
           alert("User not logged in! Redirecting to login...");
-          window.location.href = "index.html";
+          window.location.href = "new_login.html";
           return;
         }
 
@@ -452,7 +474,7 @@
 
         if (!ownerId || ownerId === "0") {
           alert("User not logged in! Redirecting to login...");
-          window.location.href = "index.html";
+          window.location.href = "new_login.html";
           return;
         }
 
@@ -566,7 +588,7 @@
           sessionStorage.getItem("userId") || localStorage.getItem("userId");
         if (!ownerId || ownerId === "0") {
           alert("User not logged in! Redirecting to login...");
-          window.location.href = "index.html";
+          window.location.href = "new_login.html";
           return;
         }
 

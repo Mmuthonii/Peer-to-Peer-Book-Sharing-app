@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - OneMoreChapter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #e5e1da;
+        color: #4a4a3d;
+      }
+      header {
+        background-color: #9cab85;
+        padding: 1rem 2rem;
+      }
+      header h1 {
+        font-size: 1.5rem;
+        font-style: italic;
+        color: #4a4a3d;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+        padding: 2rem;
+        gap: 4rem;
+        transform: scale(1.2);
+      }
+      .left-section {
+        max-width: 80%;
+      }
+      .left-section h2 {
+        font-size: 2rem;
+        color: #4a4a3d;
+      }
+      .left-section p {
+        font-size: 1rem;
+        color: #6c6c5f;
+      }
+      .right-section {
+        background-color: #dacbb3;
+        padding: 2rem;
+        border-radius: 10px;
+        width: 300px;
+      }
+      .right-section h2 {
+        font-size: 1.5rem;
+        color: #4a4a3d;
+      }
+      label {
+        display: block;
+        margin: 0.5rem 0 0.2rem;
+      }
+      input {
+        width: 90%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .checkbox-container {
+        display: flex;
+        align-items: center; /* Ensures perfect vertical alignment */
+        margin-bottom: 1rem;
+      }
+
+      .checkbox-container label {
+        display: flex;
+        gap: 0.5rem; /* Adds space between checkbox and text */
+        order: -1; /* Keeps label before the checkbox */
+        white-space: nowrap; /* Prevents text from breaking into multiple lines */
+        margin-bottom: 1rem;
+      }
+
+      .checkbox-container input[type="checkbox"] {
+        vertical-align: middle; /* Ensures the checkbox aligns properly with text */
+        display: flex;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 0.7rem;
+        background-color: #9cab85;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .login-button:hover {
+        background-color: #8aa17e;
+      }
+      .signup-text {
+        text-align: center;
+        margin-top: 1rem;
+      }
+      .signup-text a {
+        color: #4a4a3d;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>OneMoreChapter</h1>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="left-section">
+          <h2>Loan, Read, Repeat!</h2>
+          <p>Goodbye to overpriced books - borrow from others and save.</p>
+          <img src="pictures/loginpic.png" alt="Books Illustration" />
+        </div>
+        <div class="right-section">
+          <h2>Login</h2>
+          <form
+            action="#"
+            method="POST"
+            onsubmit="event.preventDefault(); login();"
+          >
+            <label for="loginEmail">Email:</label>
+            <input
+              type="email"
+              id="loginEmail"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+            <label for="loginPassword">Password:</label>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+
+            <button type="submit" class="login-button">Login</button>
+          </form>
+          <p id="loginMessage"></p>
+          <p class="signup-text">
+            Not a member? <a href="signup.html">Sign up</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <script>
+      async function login() {
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+        const messageBox = document.getElementById("loginMessage");
+
+        messageBox.textContent = "";
+
+        if (!email || !password) {
+          messageBox.textContent = "Please enter both email and password.";
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:8080/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const responseBody = await response.json(); // ✅ Now parsing as JSON
+
+          if (response.ok) {
+            console.log("Login Response:", responseBody);
+
+            sessionStorage.setItem("userId", String(responseBody.id)); // ✅ Store userId as a string
+            localStorage.setItem("userId", String(responseBody.id));
+
+            sessionStorage.setItem("userEmail", responseBody.email);
+            sessionStorage.setItem("username", responseBody.username);
+
+            alert("Login successful! Redirecting to home...");
+            window.location.href = "home.html";
+          } else {
+            messageBox.textContent = responseBody.error || "Login failed.";
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          messageBox.textContent = "Login failed. Please try again.";
+        }
+      }
+    </script>
+  </body>
+</html>

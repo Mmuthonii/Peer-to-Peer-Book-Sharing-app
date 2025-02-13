@@ -67,11 +67,6 @@
         height: 24px;
         fill: white;
         cursor: pointer;
-        transition: transform 0.2s ease-in-out;
-      }
-
-      .icon:hover {
-        transform: scale(1.1);
       }
 
       .search-popup {
@@ -219,54 +214,6 @@
         font-size: 0.9rem;
         color: #7a7a7a;
       }
-
-      /* Profile Dropdown Container */
-      .profile-dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      /* The dropdown menu (hidden by default) */
-      .dropdown-menu {
-        display: none;
-        position: absolute;
-        right: 0;
-        background-color: #ffffff;
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        overflow: hidden;
-        min-width: 150px;
-        z-index: 10;
-      }
-
-      /* Style dropdown items */
-      .dropdown-menu a {
-        display: block;
-        padding: 10px;
-        color: #4a4a3d;
-        text-decoration: none;
-        font-size: 0.9rem;
-      }
-
-      /* Hover effect */
-      .dropdown-menu a:hover {
-        background-color: #f0f0f0;
-      }
-
-      /* Show dropdown when hovering over profile icon */
-      .profile-dropdown:hover .dropdown-menu {
-        display: block;
-      }
-
-      /* Profile Icon Styling */
-      .profile-icon .icon {
-        cursor: pointer;
-        transition: transform 0.2s ease-in-out;
-      }
-
-      .profile-icon .icon:hover {
-        transform: scale(1.1);
-      }
     </style>
   </head>
   <body>
@@ -295,37 +242,26 @@
         </svg>
 
         <!-- Messaging Icon -->
-        <a href="messages.html">
-          <svg
-            class="icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
-            ></path>
-          </svg>
-        </a>
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20 2H4a2 2 0 00-2 2v12a2 2 0 002 2h4l4 4v-4h8a2 2 0 002-2V4a2 2 0 00-2-2zm0 12H10v2.586L8.414 14H4V4h16v10z"
+          ></path>
+        </svg>
 
-        <!-- Profile Dropdown -->
-        <div class="profile-dropdown">
-          <a href="#" class="profile-icon">
-            <svg
-              class="icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
-              ></path>
-            </svg>
-          </a>
-          <div class="dropdown-menu">
-            <a href="profile.html">Profile</a>
-            <a href="settings.html">Settings</a>
-            <a href="logout.html">Logout</a>
-          </div>
-        </div>
+        <!-- Profile Icon -->
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.015-8 4.5V21h16v-2.5c0-2.485-3.582-4.5-8-4.5z"
+          ></path>
+        </svg>
       </div>
       <div class="search-popup">
         <input type="text" placeholder="Search..." />
