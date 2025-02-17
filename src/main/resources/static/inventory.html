@@ -242,7 +242,8 @@
             <th>Genre</th>
             <th>Condition</th>
             <th>Description</th>
-            <th>Actions</th>
+            <th>Status</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody id="inventoryTable"></tbody>
@@ -253,7 +254,12 @@
     <h3 id="formTitle">Add Book</h3>
     <input type="text" id="bookTitle" placeholder="Book Title" required>
     <input type="text" id="bookAuthor" placeholder="Author">
+    <label for="bookStatus">Status:</label>
+    <input type="text" id="bookStatus" readonly placeholder="Available">
+
     <select id="bookGenre">
+
+
         <option value="" disabled selected>Choose Genre</option>
         <option value="Fiction">Fiction</option>
         <option value="Non-Fiction">Non-Fiction</option>
@@ -344,11 +350,11 @@
             return;
         }
 
-        console.log("Fetching books for user ID:", ownerId); // Debugging
+        console.log("Fetching books for user ID:", ownerId);
 
         try {
             const response = await fetch(`http://localhost:8080/books/owner/${ownerId}`);
-            console.log("API Response:", response); // Debugging
+            console.log("API Response:", response);
 
             if (!response.ok) {
                 throw new Error(`Failed to fetch books: ${await response.text()}`);
@@ -359,29 +365,43 @@
                 throw new Error("Invalid response format (Expected an array)");
             }
 
-            console.log("Books Loaded:", books); // Debugging
+            console.log("Books Loaded:", books);
 
             const table = document.getElementById("inventoryTable");
-            table.innerHTML = ""; // Clear previous content
+            table.innerHTML = ""; // ✅ Clear previous content
 
             if (books.length === 0) {
-                table.innerHTML = "<tr><td colspan='7'>No books found.</td></tr>";
+                table.innerHTML = "<tr><td colspan='8'>No books found.</td></tr>";
             } else {
                 books.forEach(book => {
                     const row = document.createElement("tr");
+
+                    // ✅ Ensure book ID is correctly referenced
                     row.innerHTML = `
-                    <td><img src="${book.image || 'https://via.placeholder.com/50'}" class="book-image"></td>
-                    <td>${book.title}</td>
-                    <td>${book.author || '-'}</td>
-                    <td>${book.genre || '-'}</td>
-                    <td>${book.condition || '-'}</td>
-                    <td>${book.description || '-'}</td>
-                    <td>
-                        <button class="edit-button" onclick="editBook(${book.id})">Edit</button>
-                        <button class="delete-button" onclick="deleteBook(${book.id})">Delete</button>
-                    </td>
-                `;
+                <td><img src="${book.image || 'https://via.placeholder.com/50'}" class="book-image"></td>
+                <td>${book.title}</td>
+                <td>${book.author || '-'}</td>
+                <td>${book.genre || '-'}</td>
+                <td>${book.condition || '-'}</td>
+                <td>${book.description || '-'}</td>
+                <td style="color: ${book.status === "Unavailable" ? "red" : "green"}; font-weight: bold;">
+                    ${book.status || "Unknown"}
+                </td>
+                <td>
+                    <button class="edit-button" data-id="${book.id}">Edit</button>
+                    <button class="delete-button" data-id="${book.id}">Delete</button>
+                </td>
+            `;
                     table.appendChild(row);
+                });
+
+                // ✅ Re-attach event listeners after dynamically adding elements
+                document.querySelectorAll(".edit-button").forEach(button => {
+                    button.addEventListener("click", () => editBook(button.dataset.id));
+                });
+
+                document.querySelectorAll(".delete-button").forEach(button => {
+                    button.addEventListener("click", () => deleteBook(button.dataset.id));
                 });
             }
         } catch (error) {
@@ -389,7 +409,6 @@
             alert("Could not load books.");
         }
     }
-
 
     // ✅ Show Add/Edit Book Form
     function showAddForm(isEdit = false, book = {}) {
@@ -403,9 +422,16 @@
         document.getElementById("bookCondition").value = book.condition || "";
         document.getElementById("bookDescription").value = book.description || "";
 
-        // Change button behavior
+        // ✅ Preserve book status (for editing)
+        const statusInput = document.getElementById("bookStatus");
+        if (statusInput) {
+            statusInput.value = book.status || "Available";
+            statusInput.readOnly = true;
+        }
+
+        // ✅ Change button behavior
         const saveButton = document.querySelector("#addEditForm button");
-        saveButton.setAttribute("onclick", isEdit ? `updateBook(${book.id})` : "saveBook()");
+        saveButton.onclick = isEdit ? () => updateBook(book.id) : saveBook;
     }
 
     // ✅ Hide Form
@@ -415,27 +441,22 @@
 
     // ✅ Save a New Book
     async function saveBook() {
-        console.log("Saving book...");
+        console.log("📌 Saving book...");
 
         const ownerId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
-
         if (!ownerId || ownerId === "0") {
             alert("User not logged in! Redirecting to login...");
             window.location.href = "index.html";
             return;
         }
 
-        const bookImage = document.getElementById("bookImage").files[0]; // ✅ Get uploaded image
+        const bookImage = document.getElementById("bookImage").files[0];
 
-        // ✅ Convert image to Base64 if an image is selected
         let imageBase64 = "";
         if (bookImage) {
             const reader = new FileReader();
             reader.readAsDataURL(bookImage);
-            reader.onload = () => {
-                imageBase64 = reader.result;
-                sendBookToServer(imageBase64);
-            };
+            reader.onload = () => sendBookToServer(reader.result);
         } else {
             sendBookToServer("");
         }
@@ -450,15 +471,18 @@
             condition: document.getElementById("bookCondition").value,
             description: document.getElementById("bookDescription").value,
             ownerId: sessionStorage.getItem("userId") || localStorage.getItem("userId"),
-            image: imageBase64 // ✅ Attach Base64 image to book object
+            image: imageBase64,
+            status: "Available" // ✅ Ensure status is set when adding a book
         };
 
         if (!newBook.title || !newBook.genre || !newBook.condition) {
-            alert("Please fill in all required fields.");
+            alert("❌ Please fill in all required fields.");
             return;
         }
 
         try {
+            console.log("📌 Sending Book Data:", newBook);
+
             const response = await fetch("http://localhost:8080/books/add", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -466,80 +490,75 @@
             });
 
             const result = await response.text();
-            alert(result);
+            console.log("✅ Server Response:", result);
 
             if (response.ok) {
+                alert("✅ Book added successfully!");
                 hideForm();
-                loadInventory(); // Reload books
+                loadInventory();
+            } else {
+                alert("❌ Error adding book: " + result);
             }
         } catch (error) {
-            console.error("Error adding book:", error);
+            console.error("❌ Error adding book:", error);
             alert("Failed to add book. Please try again.");
         }
     }
 
     async function editBook(bookId) {
         try {
-            console.log(`Fetching book details for ID: ${bookId}`);
+            console.log(`📌 Fetching book details for ID: ${bookId}`);
 
             const response = await fetch(`http://localhost:8080/books/${bookId}`);
-            if (!response.ok) throw new Error("Book details not found.");
+            if (!response.ok) throw new Error("❌ Book details not found.");
             const book = await response.json();
 
-            // ✅ Fill form with book details
-            document.getElementById("bookTitle").value = book.title;
-            document.getElementById("bookAuthor").value = book.author;
-            document.getElementById("bookGenre").value = book.genre;
-            document.getElementById("bookCondition").value = book.condition;
-            document.getElementById("bookDescription").value = book.description;
+            console.log("✅ Book Data Loaded:", book);
+
+            // ✅ Ensure all form fields exist before setting values
+            document.getElementById("bookTitle").value = book.title || "";
+            document.getElementById("bookAuthor").value = book.author || "";
+            document.getElementById("bookGenre").value = book.genre || "";
+            document.getElementById("bookCondition").value = book.condition || "";
+            document.getElementById("bookDescription").value = book.description || "";
+
+            // ✅ Preserve book status and prevent modifications
+            const statusInput = document.getElementById("bookStatus");
+            if (statusInput) {
+                statusInput.value = book.status || "Available"; // ✅ Prevents "Unknown" status
+                statusInput.readOnly = true;
+            }
 
             // ✅ Show current book image
             const imagePreview = document.getElementById("bookImagePreview");
-            if (book.image && book.image.startsWith("data:image")) {
-                imagePreview.src = book.image;
-            } else {
-                imagePreview.src = "https://via.placeholder.com/150"; // Default image
+            if (imagePreview) {
+                imagePreview.src = book.image || "https://via.placeholder.com/150";
             }
 
-            // ✅ Listen for new image selection
-            const bookImageInput = document.getElementById("bookImage");
-            bookImageInput.value = ""; // Clear previous input
-            bookImageInput.onchange = function () {
-                const file = bookImageInput.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = function () {
-                        imagePreview.src = reader.result; // Show new image preview
-                    };
-                }
-            };
-
-            // ✅ Change save button to update book
+            // ✅ Ensure the Save Button updates the book correctly
             const saveButton = document.querySelector("#addEditForm button");
-            saveButton.setAttribute("onclick", `updateBook(${bookId})`);
+            if (saveButton) {
+                saveButton.onclick = () => updateBook(bookId);
+                saveButton.textContent = "Update Book";
+            }
 
             showAddForm(true, book);
         } catch (error) {
-            console.error("Error fetching book for edit:", error);
+            console.error("❌ Error fetching book for edit:", error);
             alert("Book details not found.");
         }
     }
 
-
-    // ✅ Update Book
     async function updateBook(bookId) {
-        console.log("Updating book...");
+        console.log(`📌 Updating book ID: ${bookId}...`);
 
-        const ownerId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
-        if (!ownerId || ownerId === "0") {
-            alert("User not logged in! Redirecting to login...");
-            window.location.href = "index.html";
+        if (!bookId || bookId === "undefined") {
+            alert("❌ Error: Invalid book ID.");
             return;
         }
 
         const bookImageInput = document.getElementById("bookImage").files[0];
-        let imageBase64 = document.getElementById("bookImagePreview").src; // ✅ Default to existing image
+        let imageBase64 = document.getElementById("bookImagePreview").src;
 
         if (bookImageInput) {
             const reader = new FileReader();
@@ -553,64 +572,38 @@
         }
     }
 
-    // ✅ Function to send the updated book data to the backend
-    async function sendUpdatedBookToServer(bookId, imageBase64) {
-        const updatedBook = {
-            title: document.getElementById("bookTitle").value.trim(),
-            author: document.getElementById("bookAuthor").value.trim(),
-            genre: document.getElementById("bookGenre").value,
-            condition: document.getElementById("bookCondition").value,
-            description: document.getElementById("bookDescription").value,
-            ownerId: sessionStorage.getItem("userId") || localStorage.getItem("userId"),
-            image: imageBase64 // ✅ Ensure image is sent
-        };
-
-        if (!updatedBook.title || !updatedBook.genre || !updatedBook.condition) {
-            alert("Please fill in all required fields.");
-            return;
-        }
-
-        try {
-            const response = await fetch(`http://localhost:8080/books/edit/${bookId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(updatedBook),
-            });
-
-            const result = await response.text();
-            alert(result);
-
-            if (response.ok) {
-                hideForm();
-                loadInventory(); // Reload books
-            }
-        } catch (error) {
-            console.error("Error updating book:", error);
-            alert("Failed to update book. Please try again.");
-        }
-    }
-
-
     // ✅ Delete Book
     async function deleteBook(bookId) {
         if (!confirm("Are you sure you want to delete this book?")) {
             return;
         }
 
+        console.log(`📌 Attempting to delete book ID: ${bookId}`);
+
         try {
             const response = await fetch(`http://localhost:8080/books/delete/${bookId}`, {
                 method: "DELETE",
             });
 
-            const result = await response.text();
-            alert(result);
-            loadInventory(); // Reload after delete
+            if (!response.ok) {
+                throw new Error(`Failed to delete book: ${await response.text()}`);
+            }
 
+            alert("✅ Book deleted successfully!");
+            loadInventory();
         } catch (error) {
-            console.error("Error deleting book:", error);
+            console.error("❌ Error deleting book:", error);
             alert("Failed to delete book.");
         }
     }
+
+    // ✅ Event Listener for Delete Button
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("delete-button")) {
+            const bookId = event.target.dataset.id;
+            deleteBook(bookId);
+        }
+    });
 
     // ✅ Run this when page loads
     document.addEventListener("DOMContentLoaded", loadInventory);

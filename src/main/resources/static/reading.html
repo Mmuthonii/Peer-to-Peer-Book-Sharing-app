@@ -21,6 +21,21 @@
             padding: 1rem 2rem;
             position: relative;
         }
+        .book-placeholder {
+            width: 50px;
+            height: 75px;
+            background-color: #ececec;
+            border-radius: 8px;
+            display: inline-block;
+            overflow: hidden; /* Ensures image stays within the placeholder */
+        }
+
+        .book-placeholder img {
+            width: 120%;
+            height: 120%;
+            object-fit: cover; /* Ensures the image fills the placeholder without distortion */
+            border-radius: 8px;
+        }
 
         header .logo {
             font-size: 1.5rem; /* Slightly larger for better readability */
@@ -107,11 +122,91 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        /* Page Title */
-        .page-title {
+        .page-title h2 {
             text-align: left;
-            margin: 3rem 0 2rem 10rem;
-            font-size: 2rem;
+            margin: 5rem 0 5rem 13rem;
+            width: 100%;
+            font-size: 3rem;
+        }
+
+        /* Currently Reading Section */
+        #readingContainer {
+            width: 80%;
+            margin: auto;
+            color: #4a4a3d;
+            background-color: #e5e1da; /* Match background color */
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #e5e1da; /* Match background color */
+        }
+
+        /* Table Headers */
+        th {
+            font-size: 1.2rem;
+            font-style: italic;
+            text-align: left;
+            padding: 15px 20px;
+            color: #4a4a3d;
+        }
+
+        /* Table Rows */
+        tr {
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Table Cells */
+        td {
+            padding: 15px 20px;
+            vertical-align: middle;
+        }
+
+        /* Book Placeholder & Titles */
+        .book-placeholder {
+            width: 50px;
+            height: 75px;
+            background-color: #ececec;
+            border-radius: 8px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .book-title {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 1rem;
+            color: #4a4a3d;
+            vertical-align: middle;
+        }
+
+        /* Borrower Placeholder */
+        .user-placeholder {
+            width: 30px;
+            height: 30px;
+            background-color: #f3e4d7;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        /* Return Button */
+        .returned-btn {
+            background-color: #9cab85;
+            color: #4a4a3d;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .returned-btn:hover {
+            background-color: #7a9a6e;
         }
 
         /* Table Styling */
@@ -121,59 +216,52 @@
             border-collapse: collapse;
             text-align: left;
             background-color: white;
-            border-radius: 8px;
+            border-radius: 10px;
+            overflow: hidden;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        th, td {
-            padding: 1.5rem;
-            border-bottom: 1px solid #ccc;
-        }
-
+        /* Table Headers */
         th {
             font-size: 1.2rem;
             font-style: italic;
-            background-color: #c9c6a9;
+            background-color: #9cab85;
+            color: white;
+            padding: 1.2rem;
+            text-align: center;
         }
 
-        /* Book Placeholder */
-        .book-placeholder {
-            width: 70px;
-            height: 100px;
-            background-color: #ececec;
-            border-radius: 8px;
-            display: inline-block;
-            vertical-align: middle;
+        /* Table Cells */
+        td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
         }
 
-        /* Book Titles */
-        .book-title {
-            display: inline-block;
-            margin-left: 15px;
-            font-size: 1rem;
-            color: #4a4a3d;
-        }
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            table {
+                width: 95%;
+            }
 
-        /* User Placeholder */
-        .user-placeholder {
-            width: 40px;
-            height: 40px;
-            background-color: #f3e4d7;
-            border-radius: 50%;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
+            .book-placeholder {
+                width: 50px;
+                height: 80px;
+            }
 
-        /* Rating Stars */
-        .stars {
-            font-size: 1.2rem;
-            color: #c96c6c;
+            .user-placeholder {
+                width: 30px;
+                height: 30px;
+            }
+
+            .returned-btn {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
-
 <header>
     <div class="logo">OneMoreChapter</div>
     <nav>
@@ -205,81 +293,80 @@
     <div class="page-title">
         <h2>Currently Reading</h2>
     </div>
-
     <table>
         <thead>
         <tr>
             <th>Borrowed Books</th>
             <th>From</th>
-            <th>Duration</th>
-            <th>Rate</th>
+            <th>Return Book</th>
         </tr>
         </thead>
-        <tbody id="readingTable">
-        <!-- Books will be dynamically inserted here -->
+        <tbody id="readingContainer">
+        <tr>
+            <td>
+                <div class="book-placeholder"></div>
+                <span class="book-title">Book Title 1</span>
+            </td>
+            <td>
+                <div class="user-placeholder"></div>
+                <span>Name</span>
+            </td>
+            <td>
+                <button class="returned-btn">Returned</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="book-placeholder"></div>
+                <span class="book-title">Book Title 2</span>
+            </td>
+            <td>
+                <div class="user-placeholder"></div>
+                <span>Name</span>
+            </td>
+            <td>
+                <button class="returned-btn">Returned</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="book-placeholder"></div>
+                <span class="book-title">Book Title 3</span>
+            </td>
+            <td>
+                <div class="user-placeholder"></div>
+                <span>Name</span>
+            </td>
+            <td>
+                <button class="returned-btn">Returned</button>
+            </td>
+        </tr>
         </tbody>
     </table>
 </main>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", loadCurrentlyReading);
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("📌 Page Loaded: Running `loadCurrentlyReading()`...");
         loadCurrentlyReading();
     });
 
-    async function loadCurrentlyReading() {
-        const userId = sessionStorage.getItem("userId");
-
-        if (!userId) {
-            console.error("User not logged in!");
-            window.location.href = "index.html";
-            return;
-        }
-
-        try {
-            const response = await fetch(`http://localhost:8080/requests/${userId}`);
-            if (!response.ok) {
-                throw new Error("Failed to fetch reading data.");
-            }
-            const readingData = await response.json();
-            populateReadingTable(readingData);
-        } catch (error) {
-            console.error("Error fetching currently reading books:", error);
+    // Function to handle Enter key press in search input
+    function handleSearch(event) {
+        if (event.key === "Enter") {
+            searchBooksFromNav();
         }
     }
 
-    function populateReadingTable(readingData) {
-        const tableBody = document.getElementById("readingTable");
-        tableBody.innerHTML = "";
-
-        if (readingData.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No books currently being read.</td></tr>`;
+    // Function to execute book search from the navigation bar
+    function searchBooksFromNav() {
+        const query = document.getElementById("navSearchInput").value.trim();
+        if (!query) {
+            alert("Please enter a search query!");
             return;
         }
-
-        readingData.forEach(entry => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>
-                    <div class="book-placeholder">
-                        <img src="${entry.bookImage || 'https://via.placeholder.com/70x100'}" alt="${entry.bookTitle}">
-                    </div>
-                    <span class="book-title">${entry.bookTitle}</span>
-                </td>
-                <td>
-                    <div class="user-placeholder"></div>
-                    <span>${entry.senderName}</span>
-                </td>
-                <td>${entry.startDate || "N/A"} - ${entry.endDate || "Ongoing"}</td>
-                <td class="stars">${generateStars(entry.rating)}</td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-
-    function generateStars(rating) {
-        const filledStars = "⭐".repeat(rating);
-        const emptyStars = "★".repeat(5 - rating);
-        return filledStars + emptyStars;
+        window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
     }
     // Function to toggle the search popup visibility
     function toggleSearchPopup() {
@@ -309,23 +396,112 @@
         // Redirect to login page
         window.location.href = "index.html";
     }
-    // Function to handle Enter key press in search input
-    function handleSearch(event) {
-        if (event.key === "Enter") {
-            searchBooksFromNav();
+    async function loadCurrentlyReading() {
+        console.log("📌 Fetching currently reading books...");
+
+        try {
+            const response = await fetch("http://localhost:8080/requests/loaned");
+            if (!response.ok) throw new Error("❌ Failed to fetch loaned books.");
+
+            const loanedBooks = await response.json();
+            console.log("✅ Loaned Books Fetched:", loanedBooks);
+
+            if (!Array.isArray(loanedBooks)) throw new Error("❌ Unexpected API response format.");
+
+            displayCurrentlyReading(loanedBooks); // ✅ Display books
+
+        } catch (error) {
+            console.error("❌ Error loading currently reading books:", error);
+            document.getElementById("readingContainer").innerHTML = "<p>No Books Currently being read..</p>";
         }
     }
 
-    // Function to execute book search from the navigation bar
-    function searchBooksFromNav() {
-        const query = document.getElementById("navSearchInput").value.trim();
-        if (!query) {
-            alert("Please enter a search query!");
+    function displayCurrentlyReading(books) {
+        console.log("📌 Displaying currently reading books:", books);
+
+        const readingContainer = document.getElementById("readingContainer");
+        if (!readingContainer) {
+            console.error("❌ Error: `readingContainer` not found in the document.");
             return;
         }
-        window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
-    }
-</script>
 
+        readingContainer.innerHTML = ""; // ✅ Clear previous content
+
+        if (!books.length) {
+            readingContainer.innerHTML = "<tr><td colspan='3' style='text-align: center;'>No books currently being read.</td></tr>";
+            return;
+        }
+
+        books.forEach((book) => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+            <td>
+                <div class="book-placeholder">
+                    <img src="${book.image || 'https://via.placeholder.com/70x100'}" alt="${book.title}">
+                </div>
+                <span class="book-title">${book.title}</span>
+            </td>
+            <td>
+                <div class="user-placeholder"></div>
+                <span>${book.borrower || "Unknown"}</span>
+            </td>
+            <td>
+                <button class="returned-btn" onclick="returnBook('${book.id}')">Returned</button>
+            </td>
+        `;
+
+            readingContainer.appendChild(row);
+        });
+
+        console.log("✅ Currently reading books displayed in UI.");
+    }
+
+    async function returnBook(bookId) {
+        if (!confirm("Are you sure you want to mark this book as returned?")) return;
+
+        try {
+            console.log(`📌 Returning book ID: ${bookId}`);
+
+            // ✅ Send request to backend to remove book from JSON
+            const response = await fetch(`http://localhost:8080/books/return/${bookId}`, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (!response.ok) throw new Error("❌ Failed to remove book from database.");
+
+            alert("✅ Book returned successfully!");
+
+            // ✅ Remove book from UI dynamically
+            document.querySelector(`[data-book-id="${bookId}"]`).remove();
+
+        } catch (error) {
+            console.error("❌ Error returning book:", error);
+            alert(error.message || "❌ Error returning book.");
+        }
+    }async function returnBook(bookId) {
+        if (!confirm("Are you sure you want to mark this book as returned?")) return;
+
+        try {
+            console.log(`📌 Removing book ID: ${bookId} from UI...`);
+
+            // ✅ Find and remove the book entry from the UI
+            const bookEntry = document.querySelector(`[data-book-id="${bookId}"]`);
+            if (bookEntry) {
+                bookEntry.remove();
+                console.log("✅ Book removed from the currently reading list.");
+            } else {
+                console.warn("⚠️ Book not found in the currently reading list.");
+            }
+
+        } catch (error) {
+            console.error("❌ Error removing book:", error);
+            alert("❌ Failed to remove book.");
+        }
+    }
+
+
+</script>
 </body>
 </html>

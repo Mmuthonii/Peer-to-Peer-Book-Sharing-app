@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Requests</title>
     <style>
         body {
@@ -50,7 +50,6 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-
         .icons {
             display: flex;
             align-items: center;
@@ -64,12 +63,36 @@
             position: relative;
         }
 
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #4a4a3d;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            background-color: #f5f5f0;
+        }
 
         .search-popup {
             display: none;
             position: absolute;
             top: 50px;
-            right: 100px;
+            right: 60px;
             background-color: #ffffff;
             padding: 10px;
             border: 1px solid #ccc;
@@ -78,70 +101,38 @@
         }
 
         .search-popup input {
-            padding: 5px;
+            padding: 10px;
             font-size: 1rem;
             width: 200px;
-        }
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 60px;
-            background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .dropdown a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #4a4a3d;
-        }
-
-        .dropdown a:hover {
-            background-color: #f0f0f0;
-        }
-        /* Page Title */
-        .page-title {
+        .page-title h2 {
             text-align: left;
-            margin: 3rem 0 2rem 10rem;
-            font-size: 2rem;
+            margin: 5rem 0 5rem 13rem;
+            width: 100%;
+            font-size: 3rem;
         }
 
-        /* Section Titles */
         h3 {
             font-size: 1.5rem;
             font-style: italic;
-            margin-left: 10rem;
-            margin-bottom: 1rem;
+            margin-left: 13rem;
+            margin-bottom: 1.5rem;
         }
 
-        /* Table Styling */
         table {
             width: 80%;
-            margin: 2rem auto;
-            border-collapse: collapse;
-            text-align: left;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 3rem auto 3rem 13rem;
+            table-layout: fixed;
         }
 
         th, td {
-            padding: 1.2rem;
+            padding: 1rem;
             border-bottom: 1px solid #ccc;
+            text-align: left;
         }
 
-        th {
-            font-size: 1.2rem;
-            font-style: italic;
-            background-color: #c9c6a9;
-        }
-
-        /* Book and User Placeholders */
         .book-placeholder {
             width: 60px;
             height: 90px;
@@ -161,14 +152,13 @@
         .user-placeholder {
             width: 40px;
             height: 40px;
-            background-color: #f3e4d7;
+            background-color: darkgrey;
             border-radius: 50%;
             display: inline-block;
             vertical-align: middle;
             margin-right: 10px;
         }
 
-        /* Status Styling */
         .status {
             display: inline-block;
             padding: 5px 10px;
@@ -177,16 +167,9 @@
             font-size: 0.9rem;
             font-style: italic;
             border-radius: 5px;
+            margin-bottom: 8px;
         }
 
-        .pickup, .dropoff {
-            display: block;
-            font-size: 0.9rem;
-            color: #4a4a3d;
-            font-weight: bold;
-        }
-
-        /* Action Buttons */
         .accept-btn {
             background-color: #9cab85;
             color: white;
@@ -217,7 +200,6 @@
     </style>
 </head>
 <body>
-
 <header>
     <div class="logo">OneMoreChapter</div>
     <nav>
@@ -245,15 +227,14 @@
     </div>
 </header>
 
-
 <main>
     <div class="page-title">
         <h2>Requests</h2>
 
-        <ul id="notificationList"></ul>
+
     </div>
 
-    <!-- Books I Requested -->
+    <!-- Books I Requested (Sent Requests) -->
     <section>
         <h3>Books I Requested</h3>
         <table>
@@ -261,17 +242,18 @@
             <tr>
                 <th>Book</th>
                 <th>Loaner</th>
-                <th>Requested Duration</th>
                 <th>Status</th>
             </tr>
             </thead>
-            <tbody id="requestedBooksTable">
-            <!-- Requests will be dynamically loaded here -->
+            <tbody id="sentRequestsTable">
+            <tr>
+                <td colspan="3">Loading...</td>
+            </tr>
             </tbody>
         </table>
     </section>
 
-    <!-- Books Requested From Me -->
+    <!-- Books Requested From Me (Received Requests) -->
     <section>
         <h3>Books Requested From Me</h3>
         <table>
@@ -279,42 +261,60 @@
             <tr>
                 <th>Book</th>
                 <th>Requester</th>
-                <th>Requested Duration</th>
                 <th>Action</th>
             </tr>
             </thead>
-            <tbody id="incomingRequestsTable">
-            <!-- Requests will be dynamically loaded here -->
+            <tbody id="receivedRequestsTable">
+            <tr>
+                <td colspan="3">Loading...</td>
+            </tr>
             </tbody>
         </table>
     </section>
+    <section>
+        <h3>Notifications</h3>
+        <div id="notificationsDiv">
+            <ul id="notificationsList">
+                <li></li>
+            </ul>
+        </div>
+    </section>
+
 </main>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        loadRequestedBooks();
-        loadIncomingRequests();
-        loadOwnerNotifications();
-    });
+    // Function to handle Enter key press in search input
+    function handleSearch(event) {
+        if (event.key === "Enter") {
+            searchBooksFromNav();
+        }
+    }
 
-    // ✅ Function to toggle search popup visibility
+    // Function to execute book search from the navigation bar
+    function searchBooksFromNav() {
+        const query = document.getElementById("navSearchInput").value.trim();
+        if (!query) {
+            alert("Please enter a search query!");
+            return;
+        }
+        window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
+    }
+    // Function to toggle the search popup visibility
     function toggleSearchPopup() {
         const popup = document.querySelector(".search-popup");
         popup.style.display = popup.style.display === "block" ? "none" : "block";
     }
 
-    // ✅ Function to toggle dropdown visibility
+    // Function to toggle the dropdown visibility
     function toggleDropdown() {
         const dropdown = document.querySelector(".dropdown");
         dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     }
 
-    // ✅ Function to handle language toggling
+    // Function to handle language toggling
     function toggleLanguage() {
         alert("Language toggled!");
     }
-
-    // ✅ Logout function
     function logout() {
         console.log("🔴 Logging out...");
 
@@ -327,207 +327,317 @@
         // Redirect to login page
         window.location.href = "index.html";
     }
-
-    // ✅ Function to handle Enter key press in search input
-    function handleSearch(event) {
-        if (event.key === "Enter") {
-            searchBooksFromNav();
-        }
-    }
-
-    // ✅ Function to execute book search from navigation bar
-    function searchBooksFromNav() {
-        const query = document.getElementById("navSearchInput").value.trim();
-        if (!query) {
-            alert("Please enter a search query!");
-            return;
-        }
-        window.location.href = `search-results.html?query=${encodeURIComponent(query)}`;
-    }
-
-    // ✅ Fetch Requests Sent by the User
-    async function loadRequestedBooks() {
+    async function loadRequests() {
         const userId = sessionStorage.getItem("userId");
 
         if (!userId) {
-            console.error("🚨 User not logged in!");
+            alert("❌ You must log in to view requests.");
             window.location.href = "index.html";
             return;
         }
 
         try {
-            console.log(`Fetching requests sent by user: ${userId}`);
-            const response = await fetch(`http://localhost:8080/requests/sent/${userId}`);
-            if (!response.ok) throw new Error("Failed to fetch requests.");
-            const requestedBooks = await response.json();
-            console.log("✅ Sent Requests:", requestedBooks);
-            populateTable("requestedBooksTable", requestedBooks, false);
+            // ✅ Fetch Sent Requests (Books I Requested)
+            const sentResponse = await fetch(`http://localhost:8080/requests/sent/${userId}`);
+            const sentRequests = await sentResponse.ok ? await sentResponse.json() : [];
+            updateSentRequestsTable(sentRequests);
+
+            // ✅ Fetch Received Requests (Books Requested From Me)
+            const receivedResponse = await fetch(`http://localhost:8080/requests/received/${userId}`);
+            if (!receivedResponse.ok) throw new Error("Failed to fetch received requests.");
+
+            const receivedRequests = await receivedResponse.json();
+            updateReceivedRequestsTable(receivedRequests);
+
+            console.log("✅ Requests and notifications loaded successfully.");
         } catch (error) {
-            console.error("❌ Error fetching requested books:", error);
+            console.error("❌ Error loading requests:", error);
+            alert("❌ Could not load requests.");
         }
     }
 
-    // ✅ Fetch Incoming Requests
-    async function loadIncomingRequests() {
-        const userId = sessionStorage.getItem("userId");
 
-        if (!userId) {
-            console.error("🚨 User not logged in!");
-            window.location.href = "index.html";
+    async function updateSentRequestsTable(sentRequests) {
+        const sentTable = document.getElementById("sentRequestsTable");
+        if (!sentTable) {
+            console.error("❌ Error: sentRequestsTable element is missing.");
             return;
         }
 
-        try {
-            console.log(`Fetching requests received by user: ${userId}`);
-            const response = await fetch(`http://localhost:8080/requests/received/${userId}`);
-            if (!response.ok) throw new Error("Failed to fetch incoming requests.");
-            const requests = await response.json();
-            console.log("✅ Received Requests:", requests);
-            populateRequestsTable(requests);
-        } catch (error) {
-            console.error("❌ Error fetching incoming requests:", error);
-        }
-    }
+        sentTable.innerHTML = ""; // Clear existing content
 
-    // ✅ Fetch Owner Notifications
-    async function loadOwnerNotifications() {
-        const userId = sessionStorage.getItem("userId");
-
-        if (!userId) {
-            console.error("🚨 User not logged in!");
+        if (sentRequests.length === 0) {
+            sentTable.innerHTML = "<tr><td colspan='3'>No requests sent.</td></tr>";
             return;
         }
 
-        try {
-            console.log(`Fetching notifications for user: ${userId}`);
-            const response = await fetch(`http://localhost:8080/notifications/${userId}`);
-            if (!response.ok) throw new Error("Failed to fetch notifications.");
-            const notifications = await response.json();
-            console.log("✅ Notifications:", notifications);
-            displayNotifications(notifications);
-        } catch (error) {
-            console.error("❌ Error fetching notifications:", error);
-        }
-    }
+        for (const request of sentRequests) {
+            let ownerName = "Unknown"; // Default if not found
 
-    // ✅ Display Notifications
-    function displayNotifications(notifications) {
-        const notificationList = document.getElementById("notificationList");
-        notificationList.innerHTML = "";
-
-        if (notifications.length === 0) {
-            notificationList.innerHTML = "<li>No notifications.</li>";
-            return;
-        }
-
-        notifications.forEach(notification => {
-            const li = document.createElement("li");
-            li.textContent = notification.message;
-
-            if (!notification.read) {
-                li.innerHTML += ` <button onclick="markAsRead('${notification.id}')">Mark as Read</button>`;
+            // 🔍 Fetch Loaner Name (Book Owner)
+            try {
+                const ownerResponse = await fetch(`http://localhost:8080/users/${request.receiverId}`);
+                if (ownerResponse.ok) {
+                    const ownerData = await ownerResponse.json();
+                    ownerName = ownerData.username || "Unknown"; // Use name if available
+                } else {
+                    console.warn(`⚠️ Loaner ID ${request.receiverId} not found.`);
+                }
+            } catch (error) {
+                console.error(`❌ Failed to fetch loaner name for user ID ${request.receiverId}:`, error);
             }
 
-            notificationList.appendChild(li);
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>
+                <img src="${request.bookImage || 'https://via.placeholder.com/100'}" class="book-image" alt="Book Cover" style="width: 50px; height: 75px;">
+                <span class="book-title">${request.bookTitle}</span>
+            </td>
+            <td><div class="user-placeholder"></div> <span>${ownerName}</span></td>
+            <td><span class="status">${request.status}</span></td>
+        `;
+            sentTable.appendChild(row);
+        }
+    }
+
+
+
+    function updateReceivedRequestsTable(receivedRequests) {
+        const receivedTable = document.getElementById("receivedRequestsTable");
+        receivedTable.innerHTML = "";
+
+        if (receivedRequests.length === 0) {
+            receivedTable.innerHTML = "<tr><td colspan='3'>No requests received.</td></tr>";
+            return;
+        }
+
+        receivedRequests.forEach(request => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>
+                <img src="${request.bookImage || 'https://via.placeholder.com/100'}" class="book-image" alt="Book Cover" style="width: 50px; height: 75px;">
+                <span class="book-title">${request.bookTitle}</span>
+            </td>
+            <td><span>${request.senderName}</span></td>
+            <td id="requestActions-${request.id}">
+                ${request.status === "Accepted" ?
+                    "<span class='accepted-status'>✅ Accepted</span>" :
+                    request.status === "Rejected" ?
+                    "<span class='rejected-status'>❌ Rejected</span>" :
+                    `<button id="accept-${request.id}" class="accept-btn" onclick="acceptRequest('${request.id}')">Accept</button>
+                    <button id="reject-${request.id}" class="reject-btn" onclick="rejectRequest('${request.id}')">Reject</button>`}
+            </td>
+        `;
+
+            receivedTable.appendChild(row);
         });
     }
 
-    // ✅ Mark Notification as Read
-    async function markAsRead(notificationId) {
+
+    async function updateNotifications(userId, message) {
         try {
-            await fetch(`http://localhost:8080/notifications/mark-read/${notificationId}`, {
-                method: "PUT"
+            const response = await fetch(`http://localhost:8080/notifications/send`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userId: userId,
+                    message: message
+                })
             });
-            console.log(`✅ Notification ${notificationId} marked as read.`);
-            loadOwnerNotifications(); // ✅ Refresh notifications
+
+            if (!response.ok) {
+                console.error("❌ Failed to send notification.");
+                return;
+            }
+
+            console.log(`✅ Notification sent to User ID ${userId}: ${message}`);
+            loadNotifications(); // ✅ Reload notifications in UI
         } catch (error) {
-            console.error("❌ Error marking notification as read:", error);
+            console.error("❌ Error updating notification:", error);
         }
     }
+    async function acceptRequest(requestId) {
+        if (!confirm("Are you sure you want to accept this request?")) return;
 
-    // ✅ Accept or Reject a Request
-    async function respondToRequest(requestId, status) {
         try {
+            console.log(`📌 Accepting request ID: ${requestId}`);
+
+            // ✅ Step 1: Update request status to 'Accepted'
             const response = await fetch(`http://localhost:8080/requests/respond/${requestId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ status })
+                body: JSON.stringify({ status: "Accepted" })
             });
 
-            if (response.ok) {
-                alert(`✅ Request ${status}`);
-                console.log(`✅ Request ${requestId} updated to ${status}`);
-                loadIncomingRequests();  // ✅ Refresh requests
-                loadOwnerNotifications();  // ✅ Refresh notifications
-            } else {
-                throw new Error("Failed to update request.");
+            if (!response.ok) throw new Error("❌ Failed to accept request.");
+
+            console.log("✅ Request status updated to 'Accepted'.");
+
+            // ✅ Step 2: Fetch request details
+            const requestResponse = await fetch(`http://localhost:8080/requests/details/${requestId}`);
+            if (!requestResponse.ok) throw new Error("❌ Failed to fetch request details.");
+
+            const requestData = await requestResponse.json();
+            console.log("✅ Request Data Loaded:", requestData);
+
+            if (!requestData.bookId) {
+                console.error("❌ Error: No book ID found in request data.");
+                return;
             }
+
+            console.log(`📌 Fetching book ID: ${requestData.bookId}`);
+
+            // ✅ Step 3: Fetch book details
+            const bookResponse = await fetch(`http://localhost:8080/books/${requestData.bookId}`);
+            if (!bookResponse.ok) throw new Error("❌ Failed to fetch book details.");
+
+            const bookData = await bookResponse.json();
+            console.log("✅ Book Data Loaded:", bookData);
+
+            let borrowerName = requestData.senderName || "Unknown"; // ✅ Use senderName if available
+
+            // ✅ Step 4: If senderName is missing, fetch user details using senderId
+            if (!requestData.senderName && requestData.senderId) {
+                console.log(`📌 Fetching borrower name using senderId: ${requestData.senderId}`);
+                const userResponse = await fetch(`http://localhost:8080/users/${requestData.senderId}`);
+                if (!userResponse.ok) throw new Error("❌ Borrower details not found.");
+
+                const userData = await userResponse.json();
+                borrowerName = userData.username || "Unknown"; // ✅ Ensure borrower name is always set
+            }
+
+            console.log(`✅ Borrower Name Retrieved: ${borrowerName}`);
+
+            // ✅ Step 5: Store book in `loaned.json` via backend
+            const loanedBook = {
+                id: bookData.id,
+                title: bookData.title,
+                author: bookData.author,
+                borrower: borrowerName, // ✅ Now using senderName or fetched username
+                image: bookData.image || "https://via.placeholder.com/320x450"
+            };
+
+            const saveLoanResponse = await fetch(`http://localhost:8080/requests/save-loan`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(loanedBook)
+            });
+
+            if (!saveLoanResponse.ok) throw new Error("❌ Failed to save loaned book.");
+
+            console.log("✅ Book successfully saved in loaned.json");
+
+            alert(`✅ Book added to Books on Loan! Borrower: ${borrowerName}`);
+
+            // ✅ Refresh the requests list after accepting
+            loadRequests();
+
         } catch (error) {
-            console.error("❌ Error updating request:", error);
+            console.error("❌ Error accepting request:", error);
         }
     }
 
-    // ✅ Populate Incoming Requests Table
-    function populateRequestsTable(requests) {
-        const table = document.getElementById("incomingRequestsTable");
-        table.innerHTML = "";
+    function disableRequestButtons(requestId, action) {
+        const acceptButton = document.getElementById(`accept-${requestId}`);
+        const rejectButton = document.getElementById(`reject-${requestId}`);
+        const requestActions = document.getElementById(`requestActions-${requestId}`);
 
-        if (requests.length === 0) {
-            table.innerHTML = `<tr><td colspan="4" style="text-align:center;">No requests found.</td></tr>`;
-            return;
+        if (action === "Accepted") {
+            if (acceptButton) {
+                acceptButton.textContent = "Accepted";
+                acceptButton.disabled = true;
+                acceptButton.classList.add("disabled-btn");
+            }
+
+            if (rejectButton) {
+                rejectButton.style.display = "none"; // Hide reject button
+            }
+
+            if (requestActions) {
+                requestActions.innerHTML = "<span class='accepted-status'>✅ Accepted</span>"; // ✅ Replace buttons with text
+            }
         }
 
-        requests.forEach(request => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-        <td>
-            <div class="book-placeholder">
-                <img src="${request.bookImage || 'https://via.placeholder.com/70x100'}" alt="${request.bookTitle}">
-            </div>
-            <span class="book-title">${request.bookTitle}</span>
-        </td>
-        <td>${request.senderName}</td>
-        <td>${request.startDate || "N/A"} - ${request.endDate || "N/A"}</td>
-        <td>
-            <button class="accept-btn" onclick="respondToRequest('${request.id}', 'Accepted')">Accept</button>
-            <button class="reject-btn" onclick="respondToRequest('${request.id}', 'Rejected')">Reject</button>
-        </td>
-    `;
-            table.appendChild(row);
-        });
-    }
+        if (action === "Rejected") {
+            if (rejectButton) {
+                rejectButton.textContent = "Rejected";
+                rejectButton.disabled = true;
+                rejectButton.classList.add("disabled-btn");
+            }
 
-    // ✅ Populate Generic Table
-    function populateTable(tableId, requests, allowActions) {
-        const table = document.getElementById(tableId);
-        table.innerHTML = "";
+            if (acceptButton) {
+                acceptButton.style.display = "none"; // Hide accept button
+            }
 
-        if (requests.length === 0) {
-            table.innerHTML = `<tr><td colspan="4" style="text-align:center;">No requests found.</td></tr>`;
-            return;
+            if (requestActions) {
+                requestActions.innerHTML = "<span class='rejected-status'>❌ Rejected</span>"; // ✅ Replace buttons with text
+            }
         }
-
-        requests.forEach(request => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-        <td>
-            <div class="book-placeholder"></div>
-            <span class="book-title">${request.bookTitle}</span>
-        </td>
-        <td>
-            <div class="user-placeholder"></div>
-            <span>${request.senderName || request.receiverName}</span>
-        </td>
-        <td>${request.startDate || "N/A"} - ${request.endDate || "N/A"}</td>
-        <td>${allowActions ? `<button class="accept-btn" onclick="respondToRequest('${request.id}', 'Accepted')">Accept</button>
-                              <button class="reject-btn" onclick="respondToRequest('${request.id}', 'Rejected')">Reject</button>`
-                              : `<span class="status">${request.status}</span>`}</td>
-    `;
-            table.appendChild(row);
-        });
     }
+
+    async function rejectRequest(requestId) {
+        if (!confirm("Are you sure you want to reject this request?")) return; // ✅ Exit if user cancels
+
+        try {
+            console.log(`📌 Rejecting request ID: ${requestId}`);
+
+            // ✅ Step 1: Send request to backend to update status
+            const response = await fetch(`http://localhost:8080/requests/respond/${requestId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "Rejected" })
+            });
+
+            if (!response.ok) throw new Error("❌ Failed to reject request.");
+
+            console.log("✅ Request status updated to 'Rejected'.");
+
+            // ✅ Step 2: Send Notification to Borrower
+            await updateNotifications(requestId, "❌ Your request has been Rejected.");
+
+            // ✅ Step 3: Disable Buttons & Update UI
+            disableRequestButtons(requestId, "Rejected");
+
+            // ✅ Step 4: Show Confirmation Popup
+            alert("❌ Request Rejected!");
+
+            // ✅ Step 5: Automatically reload the page to reflect changes
+            location.reload(); // ✅ Page will reload after request is processed
+
+        } catch (error) {
+            console.error("❌ Error rejecting request:", error);
+        }
+        loadRequests();
+    }
+
+    async function returnBook(bookId) {
+        try {
+            console.log(`📌 Returning book ID: ${bookId}`);
+
+            // ✅ Step 1: Update the book status back to "Available"
+            const updateResponse = await fetch(`http://localhost:8080/books/update-status/${bookId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "Available" })
+            });
+
+            if (!updateResponse.ok) {
+                alert("❌ Failed to update book status.");
+                return;
+            }
+
+            alert("✅ Book has been returned and is now 'Available'.");
+            loadRequests(); // ✅ Reload requests
+            loadBookDetails(); // ✅ Update book details UI
+
+        } catch (error) {
+            console.error("❌ Error returning book:", error);
+        }
+    }
+
+    // ✅ Run function when page loads
+    document.addEventListener("DOMContentLoaded", loadRequests);
 
 </script>
-
 </body>
 </html>

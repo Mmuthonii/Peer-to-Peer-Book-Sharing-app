@@ -121,6 +121,21 @@
             padding: 2rem;
             justify-items: center;
         }
+       .return-button{
+            background-color: #9cab85;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+
+        }
+
+        .return-button:hover {
+            background-color: #7a9a6e;
+        }
+
 
         .book-item {
             text-align: center;
@@ -275,53 +290,153 @@
     let currentPage = 1;
     const booksPerPage = 15;
     let books = [];
-
-    async function loadBooksOnLoan() {
-        const userId = sessionStorage.getItem("userId") || localStorage.getItem("userId");
-
-        if (!userId) {
-            alert("User not logged in! Redirecting to login...");
-            window.location.href = "index.html";
-            return;
-        }
-
-        try {
-            const response = await fetch(`http://localhost:8080/books/owner/${userId}`);
-            if (!response.ok) throw new Error("Failed to fetch books.");
-
-            books = await response.json();
-            displayBooks(currentPage);
-        } catch (error) {
-            console.error("Error loading books:", error);
-        }
-    }
-
-    function displayBooks(page) {
+    function displayBooks(books) {
         const bookContainer = document.getElementById("bookContainer");
-        bookContainer.innerHTML = ""; // Clear previous books
+        bookContainer.innerHTML = ""; // ✅ Clear previous entries
 
-        const startIndex = (page - 1) * booksPerPage;
-        const endIndex = startIndex + booksPerPage;
-        const booksToShow = books.slice(startIndex, endIndex);
-
-        if (booksToShow.length === 0) {
+        if (books.length === 0) {
             bookContainer.innerHTML = "<p>No books currently on loan.</p>";
             return;
         }
 
-        booksToShow.forEach((book) => {
+        books.forEach((book) => {
             const bookItem = document.createElement("div");
             bookItem.classList.add("book-item");
+
             bookItem.innerHTML = `
-                <div class="book-placeholder">
-                    <img src="${book.image || 'https://via.placeholder.com/150'}" alt="${book.title}">
-                </div>
-                <p class="book-title">${book.title}</p>
-            `;
+            <div class="book-placeholder">
+                <img src="${book.image || 'https://via.placeholder.com/150'}" alt="${book.title}">
+            </div>
+            <p class="book-title">${book.title}</p>
+            <p><strong>Borrower:</strong> ${book.borrower || "Unknown"}</p>
+            <button class="return-button" onclick="returnBook('${book.id}')">Mark as Returned</button>
+        `;
+
+            bookContainer.appendChild(bookItem);
+        });
+    }
+
+
+    async function loadBooksOnLoan() {
+        console.log("📌 Fetching loaned books from backend...");
+        try {
+            const response = await fetch("http://localhost:8080/requests/loaned");
+            if (!response.ok) throw new Error("❌ Failed to fetch loaned books.");
+
+            const loanedBooks = await response.json();
+            console.log("✅ Loaned Books Fetched on Load:", loanedBooks);
+
+            if (!Array.isArray(loanedBooks)) throw new Error("❌ Unexpected API response format.");
+
+            displayBooks(loanedBooks); // ✅ Ensure this function runs
+
+        } catch (error) {
+            console.error("❌ Error loading loaned books:", error);
+            document.getElementById("bookContainer").innerHTML = "<p>No Books.</p>";
+        }
+    }
+
+    // ✅ Ensure function runs when page loads
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("📌 Page Loaded: Running loadBooksOnLoan()");
+        loadBooksOnLoan();
+    });
+
+    async function returnBook(bookId) {
+        if (!confirm("Are you sure you want to mark this book as returned?")) return;
+
+        try {
+            console.log(`📌 Returning book ID: ${bookId}`);
+
+            // ✅ Step 1: Update book status to "Available" in backend
+            const updateResponse = await fetch(`http://localhost:8080/books/update-status/${bookId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: "Available" }) // ✅ Mark book as available
+            });
+
+            if (!updateResponse.ok) {
+                alert("❌ Failed to update book status.");
+                return;
+            }
+
+            console.log("✅ Book status updated to Available.");
+
+            // ✅ Step 2: Refresh book details page if open
+            localStorage.setItem("refreshBookDetails", "true"); // ✅ Store flag to refresh book-details.html
+
+            alert("✅ Book has been returned and is now 'Available'.");
+
+            // ✅ Step 3: Reload loaned books list
+            loadBooksOnLoan();
+
+        } catch (error) {
+            console.error("❌ Error returning book:", error);
+            alert("❌ Error returning book.");
+        }
+    }
+    function displayBooks(books) {
+        console.log("📌 Displaying books:", books);
+
+        const bookContainer = document.getElementById("bookContainer");
+        bookContainer.innerHTML = ""; // ✅ Clear previous entries
+
+        if (!books.length) {
+            bookContainer.innerHTML = "<p>No books currently on loan.</p>";
+            return;
+        }
+
+        books.forEach((book) => {
+            const bookItem = document.createElement("div");
+            bookItem.classList.add("book-item");
+
+            // ✅ Ensure Borrower's Name is Correctly Displayed
+            const borrowerName = book.borrower && book.borrower !== "Unknown" ? book.borrower : "Borrower Not Set";
+
+            bookItem.innerHTML = `
+        <div class="book-placeholder">
+            <img src="${book.image || 'https://via.placeholder.com/150'}" alt="${book.title}">
+        </div>
+        <p class="book-title">${book.title}</p>
+        <p><strong>Borrower:</strong> ${borrowerName}</p>
+        <button class="return-button" onclick="returnBook('${book.id}')">Mark as Returned</button>
+    `;
+
             bookContainer.appendChild(bookItem);
         });
 
-        updatePagination(page);
+        console.log("✅ Books displayed in UI.");
+    }
+
+
+    async function returnBook(bookId) {
+        if (!confirm("Are you sure you want to mark this book as returned?")) return;
+
+        try {
+            console.log(`📌 Returning book ID: ${bookId}`);
+
+            // ✅ Ensure correct API path
+            const response = await fetch(`http://localhost:8080/requests/return/${bookId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (!response.ok) {
+                alert("❌ Failed to update book status.");
+                return;
+            }
+
+            console.log("✅ Book status updated to Available.");
+
+            localStorage.setItem("refreshBookDetails", "true"); // ✅ Flag to refresh book-details.html
+            alert("✅ Book has been returned and is now 'Available'.");
+
+            loadBooksOnLoan(); // ✅ Refresh loaned books list
+
+        } catch (error) {
+            console.error("❌ Error returning book:", error);
+            alert("❌ Error returning book.");
+        }
     }
 
     function updatePagination(page) {
@@ -352,7 +467,9 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", loadBooksOnLoan);
+
+
+
 </script>
 
 </body>

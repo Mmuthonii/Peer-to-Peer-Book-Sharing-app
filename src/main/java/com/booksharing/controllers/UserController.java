@@ -52,29 +52,6 @@ public class UserController {
             e.printStackTrace();
         }
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable int id, @RequestBody User updatedUser) {
-        List<User> users = loadUsers();
-        Optional<User> userToUpdate = users.stream().filter(user -> user.getId() == id).findFirst();
-
-        if (userToUpdate.isPresent()) {
-            User existingUser = userToUpdate.get();
-
-            // Update fields if provided
-            if (updatedUser.getUsername() != null) existingUser.setUsername(updatedUser.getUsername());
-            if (updatedUser.getDob() != null) existingUser.setDob(updatedUser.getDob());
-            if (updatedUser.getGender() != null) existingUser.setGender(updatedUser.getGender());
-            if (updatedUser.getLocation() != null) existingUser.setLocation(updatedUser.getLocation());
-            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
-                existingUser.setPassword(updatedUser.getPassword()); // Password hashing required
-            }
-
-            saveUsers(users);
-            return ResponseEntity.ok("✅ User updated successfully!");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("❌ User not found!");
-        }
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User loginUser) {

@@ -171,7 +171,7 @@
             gap: 15px;
         }
 
-        .request-button, .message-button {
+        .requestButton, .message-button {
             padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 5px;
@@ -180,7 +180,7 @@
             text-align: center;
         }
 
-        .request-button {
+        .requestButton {
             background-color: #9cab85;
             color: white;
         }
@@ -190,7 +190,7 @@
             color: white;
         }
 
-        .request-button:hover {
+        .requestButton:hover {
             background-color: #8aa17e;
         }
 
@@ -209,6 +209,30 @@
             text-align: center;
             display: none;
         }
+        .status-indicator {
+            padding: 5px 10px;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .available {
+            background-color: #2ecc71; /* Green */
+            color: white;
+        }
+
+        .loaned {
+            background-color: #e74c3c; /* Red */
+            color: white;
+        }
+
+        .disabled-btn {
+            background-color: #bdc3c7 !important;
+            color: #7f8c8d !important;
+            cursor: not-allowed !important;
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -255,6 +279,10 @@
             <p><strong>Author:</strong> <span id="bookAuthor">...</span></p>
             <p><strong>Genre:</strong> <span id="bookGenre">...</span></p>
             <p><strong>Description:</strong> <span id="bookDescription">...</span></p>
+            <p><strong></strong> <span id="bookStatus">Loading...</span></p>
+
+
+
 
             <!-- Owner Information -->
             <div class="owner-section">
@@ -265,17 +293,23 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button class="request-button" onclick="sendRequest()">Request Book</button>
+            <button id="requestButton" class="request-btn" onclick="sendRequest()">Request Book</button>
             <button class="message-button">Message Owner</button>
         </div>
+        <!-- Book Availability Status -->
+
+
+        <!-- Request Book Button -->
+
+
 
         <p id="notificationMessage" class="notification"></p>
     </div>
 </div>
 
 <script>
-    // Function to toggle the search popup visibility
     function toggleSearchPopup() {
+        // Function to toggle the search popup visibility
         const popup = document.querySelector(".search-popup");
         popup.style.display = popup.style.display === "block" ? "none" : "block";
     }
@@ -303,73 +337,128 @@
         window.location.href = "index.html";
     }
 
-    async function loadBookDetails() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const bookId = urlParams.get("bookId");
+    let bookId = null;  // Global variable to store bookId
 
-    if (!bookId) {
-    alert("Invalid book ID. Redirecting to home.");
-    window.location.href = "home.html";
-    return;
-    }
-
-    try {
-    console.log(`Fetching book details for ID: ${bookId}`); // Debugging
-
-    const bookResponse = await fetch(`http://localhost:8080/books/${bookId}`);
-    if (!bookResponse.ok) throw new Error("Book not found");
-    const bookData = await bookResponse.json();
-
-    // Update book details in HTML
-    document.getElementById("bookImage").src = bookData.image || "https://via.placeholder.com/320x450";
-    document.getElementById("bookTitle").textContent = bookData.title;
-    document.getElementById("bookAuthor").textContent = bookData.author || "Unknown Author";
-    document.getElementById("bookGenre").textContent = bookData.genre || "Unknown Genre";
-    document.getElementById("bookDescription").textContent = bookData.description || "No description provided.";
-
-    // Fetch owner details
-    console.log(`Fetching owner details for ID: ${bookData.ownerId}`);
-    const ownerResponse = await fetch(`http://localhost:8080/users/${bookData.ownerId}`);
-    if (!ownerResponse.ok) throw new Error("Owner not found");
-    const ownerData = await ownerResponse.json();
-
-    document.getElementById("bookOwner").textContent = ownerData.username || "Unknown Owner";
-    document.getElementById("bookOwnerLocation").textContent = ownerData.location || "Unknown Location";
-    } catch (error) {
-    console.error("Error fetching book details:", error);
-    alert("Failed to load book details.");
-    }
-    }
-
-    // ✅ Run function when page loads
-    document.addEventListener("DOMContentLoaded", loadBookDetails);
-
-
-
-async function sendRequest() {
+    document.addEventListener("DOMContentLoaded", async () => {
         const urlParams = new URLSearchParams(window.location.search);
-        const bookId = urlParams.get("bookId");
+        bookId = urlParams.get("bookId");
 
+        if (bookId) {
+            bookId = bookId.replace(/[{}]/g, "").trim(); // ✅ Remove `{}` if present
+            bookId = decodeURIComponent(bookId); // ✅ Decode URL & remove spaces
+        }
+
+        if (!bookId) {
+            alert("❌ Invalid book ID.");
+            window.location.href = "home.html";
+            return;
+        }
+
+        console.log(`📌 Using Book ID: ${bookId}`); // ✅ Debugging output
+
+        // ✅ Load book details after extracting bookId
+        loadBookDetails();
+    });
+    async function loadBookDetails() {
+        if (!bookId) return; // ✅ Prevent errors if `bookId` is missing
+
+        try {
+            console.log(`📌 Fetching book details for ID: ${bookId}`);
+
+            const bookResponse = await fetch(`http://localhost:8080/books/${bookId}`);
+            if (!bookResponse.ok) throw new Error("❌ Book not found");
+
+            const bookData = await bookResponse.json();
+            console.log("✅ Book Data Loaded:", bookData);
+
+            if (!bookData) {
+                throw new Error("❌ Book data is empty");
+            }
+
+            // ✅ Update book details in HTML
+            document.getElementById("bookImage").src = bookData.image || "https://via.placeholder.com/320x450";
+            document.getElementById("bookTitle").textContent = bookData.title || "Unknown Title";
+            document.getElementById("bookAuthor").textContent = bookData.author || "Unknown Author";
+            document.getElementById("bookGenre").textContent = bookData.genre || "Unknown Genre";
+            document.getElementById("bookDescription").textContent = bookData.description || "No description provided.";
+
+            // ✅ Update book status directly
+            const bookStatusElement = document.getElementById("bookStatus");
+            if (bookData.status && bookData.status !== "null") {
+                bookStatusElement.textContent = `Status: ${bookData.status}`;
+                bookStatusElement.style.color = bookData.status === "Unavailable" ? "red" : "green";
+            } else {
+                bookStatusElement.textContent = " Available"; // ✅ Default if status is null
+                bookStatusElement.style.color = "green";
+            }
+
+            // ✅ Fetch owner details
+            console.log(`📌 Fetching owner details for ID: ${bookData.ownerId}`);
+            const ownerResponse = await fetch(`http://localhost:8080/users/${bookData.ownerId}`);
+            if (!ownerResponse.ok) throw new Error("❌ Owner not found");
+
+            const ownerData = await ownerResponse.json();
+            console.log("✅ Owner Data Loaded:", ownerData);
+
+            document.getElementById("bookOwner").textContent = ownerData.username || "Unknown Owner";
+            document.getElementById("bookOwnerLocation").textContent = ownerData.location || "Unknown Location";
+
+        } catch (error) {
+            console.error("❌ Error fetching book details:", error);
+            alert("❌ Failed to load book details.");
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        // ✅ Check if book-details.html needs refreshing
+        if (localStorage.getItem("refreshBookDetails") === "true") {
+            console.log("🔄 Refreshing book details after return...");
+            localStorage.removeItem("refreshBookDetails"); // ✅ Clear flag
+            loadBookDetails(); // ✅ Reload book details to show "Available" status
+        }
+    });
+
+
+    // ✅ Modify `sendRequest()` to use global `bookId`
+    async function sendRequest() {
         const userId = sessionStorage.getItem("userId");
         const username = sessionStorage.getItem("username");
 
         if (!bookId || !userId) {
-            alert("Please log in to request a book.");
+            alert("❌ Please log in to request a book.");
             return;
         }
 
-        const request = {
-            bookTitle: document.getElementById("bookTitle").textContent,
-            bookImage: document.getElementById("bookImage").src,
-            author: document.getElementById("bookAuthor").textContent,
-            senderName: username,
-            receiverId: "BOOK_OWNER_ID",  // Replace with actual book owner's ID
-            startDate: new Date().toISOString().split("T")[0], // Today's date
-            endDate: null, // End date is flexible
-            status: "Pending"
-        };
-
         try {
+            const bookResponse = await fetch(`http://localhost:8080/books/${bookId}`);
+            if (!bookResponse.ok) throw new Error("Book not found.");
+
+            const bookData = await bookResponse.json();
+
+            if (bookData.status === "Unavailable") {
+                alert("❌ This book is currently loaned out and cannot be requested.");
+                return;
+            }
+
+            const ownerId = bookData.ownerId;
+            if (!ownerId) {
+                alert("❌ Book owner not found.");
+                return;
+            }
+
+            const request = {
+                bookId: bookId,  // ✅ Use the global bookId
+                bookTitle: bookData.title,
+                bookImage: bookData.image || "https://via.placeholder.com/320x450",
+                author: bookData.author || "Unknown Author",
+                senderId: userId,
+                senderName: username,
+                receiverId: ownerId,
+                startDate: new Date().toISOString().split("T")[0],
+                endDate: null,
+                status: "Pending"
+            };
+
             const response = await fetch("http://localhost:8080/requests/send", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -377,7 +466,7 @@ async function sendRequest() {
             });
 
             if (response.ok) {
-                alert("✅ Request sent! The book owner has been notified.");
+                alert("✅ Request sent successfully!");
             } else {
                 alert("❌ Failed to send request.");
             }
@@ -385,6 +474,7 @@ async function sendRequest() {
             console.error("Error sending request:", error);
         }
     }
+
 </script>
 
 </body>
