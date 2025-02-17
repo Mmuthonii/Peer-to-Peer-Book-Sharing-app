@@ -71,5 +71,3 @@ mvn clean package
 The JAR file will be in the target/ directory.
 
 ✅ You're All Set!
-
-Now, you can start developing and testing the Book App! Let me know if you need any modifications. 🚀📚
