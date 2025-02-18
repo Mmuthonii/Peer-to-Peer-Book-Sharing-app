@@ -47,20 +47,15 @@ The application should start on http://localhost:8080.
 
 Check if the backend is running by visiting:
 
-👉 http://localhost:8080/actuator/health👉 http://localhost:8080/api/books (Example endpoint)
+👉 http://localhost:8080/api/books (Example endpoint)
 
 7️⃣ Database Configuration (If Needed)
 
-The app might use an H2 Database (in-memory) or MySQL/PostgreSQL.
+app uses json as a database
 
 Configure database settings in application.properties or application.yml.
 
-Example (src/main/resources/application.properties):
 
-spring.datasource.url=jdbc:mysql://localhost:3306/bookapp
-spring.datasource.username=root
-spring.datasource.password=yourpassword
-spring.jpa.hibernate.ddl-auto=update
 
 8️⃣ Build the Project (Optional)
 
